@@ -8,6 +8,8 @@
   --accent: #176b5b;
   --holiday: #c52525;
   --flag: #1d63b7;
+  --rail: #3f73e4;
+  --rail-control: #0f2ec7;
 }
 
 * {
@@ -81,6 +83,175 @@ select {
 
 .app-shell {
   min-height: 100vh;
+}
+
+.app-shell[data-view="simple"] {
+  display: grid;
+  grid-template-columns: 272px minmax(0, 1fr);
+  background: #d8d9de;
+}
+
+.simple-rail {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  min-height: 100vh;
+  padding: 42px 30px 30px;
+  background: var(--rail);
+  color: #fff;
+}
+
+.simple-brand {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+
+.simple-brand strong {
+  font-size: 30px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.simple-brand span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.simple-rail label {
+  gap: 7px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.simple-rail select,
+.simple-rail input {
+  height: 48px;
+  border: 2px solid #1644dc;
+  border-radius: 0;
+  background: var(--rail-control);
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+}
+
+.simple-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.simple-action {
+  min-height: 48px;
+  border: 2px solid #12287a;
+  border-radius: 0;
+  background: #fff;
+  color: #12287a;
+  font: 700 15px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.simple-action.secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.72);
+  color: #fff;
+}
+
+.simple-action.primary {
+  background: #1027a1;
+  border-color: #1027a1;
+  color: #fff;
+}
+
+.app-shell[data-view="simple"] .toolbar,
+.app-shell[data-view="simple"] .side-panel {
+  display: none;
+}
+
+.app-shell[data-view="simple"] .workspace {
+  display: block;
+  min-height: 100vh;
+}
+
+.app-shell[data-view="simple"] .preview-stage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.app-shell[data-view="simple"] .preview-toolbar {
+  position: static;
+  justify-content: flex-end;
+  padding: 16px 26px 0;
+  background: transparent;
+}
+
+.app-shell[data-view="simple"] .preview {
+  align-content: center;
+  min-height: 0;
+  padding: 22px 30px 30px;
+}
+
+.app-shell[data-view="simple"] .month-page {
+  box-shadow: 12px 18px 28px rgba(27, 31, 35, 0.24);
+}
+
+.app-shell[data-view="advanced"] .simple-rail {
+  display: none;
+}
+
+.app-shell[data-view="advanced"] .toolbar {
+  position: static;
+  grid-template-columns: minmax(150px, 1fr) repeat(8, max-content) repeat(6, 40px);
+}
+
+.advanced-close {
+  align-self: end;
+  font-size: 20px;
+}
+
+.app-shell[data-view="advanced"] .workspace {
+  grid-template-columns: minmax(620px, 0.95fr) minmax(0, 1.05fr);
+  min-height: calc(100vh - 83px);
+}
+
+.app-shell[data-view="advanced"] .side-panel {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  height: auto;
+  max-height: none;
+  background: #fbfaf7;
+}
+
+.app-shell[data-view="advanced"] .panel-section {
+  min-width: 0;
+}
+
+.app-shell[data-view="advanced"] #panel-source-xml,
+.app-shell[data-view="advanced"] #panel-calculation-hooks {
+  order: -1;
+  background: #fff;
+}
+
+.app-shell[data-view="advanced"] #panel-source-xml textarea,
+.app-shell[data-view="advanced"] #panel-calculation-hooks textarea {
+  min-height: 460px;
+}
+
+.app-shell[data-view="advanced"] .preview-stage {
+  background: #d8d9de;
+}
+
+.app-shell[data-view="advanced"] .preview-toolbar {
+  position: static;
+  background: transparent;
 }
 
 .print-route {
@@ -858,6 +1029,7 @@ input[type="file"] {
 }
 
 .month-image {
+  position: relative;
   display: grid;
   place-items: center;
   margin-bottom: 14px;
@@ -871,6 +1043,24 @@ input[type="file"] {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.image-add-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 3px solid #1027a1;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1027a1;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .calendar-grid {
@@ -993,6 +1183,32 @@ input[type="file"] {
 }
 
 @media (max-width: 920px) {
+  .app-shell[data-view="simple"] {
+    display: block;
+  }
+
+  .simple-rail {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    min-height: 0;
+    padding: 22px 18px;
+  }
+
+  .simple-brand,
+  .simple-actions {
+    grid-column: 1 / -1;
+  }
+
+  .simple-brand strong {
+    font-size: 24px;
+  }
+
+  .simple-rail select,
+  .simple-rail input {
+    font-size: 16px;
+  }
+
   .toolbar {
     grid-template-columns: 1fr 1fr;
   }
@@ -1016,6 +1232,19 @@ input[type="file"] {
     justify-content: flex-start;
     padding: 12px 14px 0;
   }
+
+  .app-shell[data-view="advanced"] .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell[data-view="advanced"] .side-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell[data-view="advanced"] #panel-source-xml,
+  .app-shell[data-view="advanced"] #panel-calculation-hooks {
+    order: 0;
+  }
 }
 
 @media print {
@@ -1029,7 +1258,9 @@ input[type="file"] {
   }
 
   .toolbar,
-  .side-panel {
+  .side-panel,
+  .simple-rail,
+  .image-add-button {
     display: none;
   }
 

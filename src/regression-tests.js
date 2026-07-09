@@ -21,6 +21,7 @@ import { applyLayoutTemplate, resolveLayout } from "./core/layout-templates.js";
 import { measureTextOverflow, mergeOverflowPreflight } from "./core/dom-preflight.js";
 import { parseIcsEvents, renderIcsCalendar } from "./core/calendar-ics.js";
 import { exportPanelSummary, pdfExportCommands } from "./core/export-commands.js";
+import { compileCalculationHooks } from "./core/calculation-hooks.js";
 
 const results = document.querySelector("#testResults");
 const checks = [];
@@ -42,6 +43,7 @@ async function run() {
   await checkNorway2027();
   await checkCalculationPlugins();
   await checkCustomFactsCalculation();
+  await checkCalculationHooks();
   await checkSourceXmlEditing();
   await checkEnhancedEventMetadata();
   await checkSelectorMatchExpectations();
@@ -430,6 +432,30 @@ async function checkCustomFactsCalculation() {
   assertThrows("Custom anchor rules reject invalid names", () => {
     compileCustomRule({ type: "anchor-offset", anchor: "not a name", offset: 0 });
   }, "Invalid anchor name");
+}
+
+async function checkCalculationHooks() {
+  const source = CALENDAR_SOURCES.find((item) => item.id === "empty");
+  const doc = await loadCalendarSource(source.path);
+  const hooks = compileCalculationHooks(`
+    registerCalculation({
+      id: "hooked-moon-anchor",
+      label: "Hooked moon anchor",
+      run({ findMoonPhase, addDays, setAnchor, setFact }) {
+        const date = addDays(findMoonPhase("full", 8), 21);
+        setAnchor("hookedMoonAnchor", date);
+        setFact(date, "hookedMoonFact", true);
+      }
+    });
+  `);
+  const project = buildCalendarProject(doc, { year: 2027, weekNumbering: "ISO", startingWeekday: 1, gmt: 1 }, {
+    calculations: hooks
+  });
+
+  assertEqual("Hook source compiles one calculation", hooks.length, 1);
+  assertEqual("Hook fact is available after built-in moon calculation", dayNode(project, "2027-09-07")?.getAttribute("hookedMoonFact"), "true");
+  assertEqual("Hook anchor is serialized for XPath rules", project.factsDoc.querySelector("anchor[id='hookedMoonAnchor']")?.getAttribute("date"), "2027-09-07");
+  assertEqual("Hook calculation metadata is visible", project.calculations.some((calculation) => calculation.id === "hooked-moon-anchor"), true);
 }
 
 async function checkSourceXmlEditing() {
@@ -1026,6 +1052,7 @@ async function checkPdfExportCommands() {
   const summary = exportPanelSummary({
     year: 2027,
     label: "Sweden",
+    timeZone: "Europe/Stockholm",
     layout: {
       unit: "mm",
       paperWidth: 210,

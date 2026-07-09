@@ -1,10 +1,10 @@
 export function renderPrintPages(project, settings, options) {
-  const { sourceLabel, monthImages, monthImageSettings, layout } = options;
+  const { sourceLabel, monthImages, monthImageSettings, layout, interactive = false } = options;
   const source = { label: sourceLabel || "Calendar" };
-  return project.pages.map((page) => renderMonthPage(page, settings, source, monthImages, monthImageSettings || {}, layout)).join("");
+  return project.pages.map((page) => renderMonthPage(page, settings, source, monthImages, monthImageSettings || {}, layout, { interactive })).join("");
 }
 
-export function renderMonthPage(page, settings, source, monthImages, monthImageSettings, layout) {
+export function renderMonthPage(page, settings, source, monthImages, monthImageSettings, layout, options = {}) {
   const image = monthImages[page.month];
   const imageStyle = imageStyleAttribute(monthImageSettings[page.month]);
   const weekdayHeader = [
@@ -22,7 +22,7 @@ export function renderMonthPage(page, settings, source, monthImages, monthImageS
   return `
     <article class="month-page template-${escapeHtml(safeClass(layout.templateId || "classic"))}" style="${pageStyle(layout)}" aria-label="${escapeHtml(page.name)} ${page.year}">
       ${title}
-      <div class="month-image" style="aspect-ratio: ${escapeHtml(ratioToCss(layout.imageRatio))}">${image ? `<img src="${image}" alt="" style="${imageStyle}">` : "<span>Month photo</span>"}</div>
+      <div class="month-image" style="aspect-ratio: ${escapeHtml(ratioToCss(layout.imageRatio))}">${image ? `<img src="${image}" alt="" style="${imageStyle}">` : "<span>Month photo</span>"}${options.interactive ? `<button class="image-add-button" type="button" data-add-image-month="${page.month}" aria-label="Add photo for ${escapeHtml(page.name)}">+</button>` : ""}</div>
       <div class="calendar-grid">${weekdayHeader}${weeks}</div>
       <footer class="page-footer">${escapeHtml(layout.infoText)}</footer>
     </article>

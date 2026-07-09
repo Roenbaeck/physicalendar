@@ -7,12 +7,46 @@
     <link rel="stylesheet" href="./src/styles.css">
   </head>
   <body>
-    <main id="app" class="app-shell">
+    <main id="app" class="app-shell" data-view="simple">
+      <aside class="simple-rail" aria-label="Calendar controls">
+        <div class="simple-brand">
+          <strong>Physicalendar</strong>
+          <span>print calendar</span>
+        </div>
+        <label>
+          Calendar
+          <select id="simpleSourceSelect"></select>
+        </label>
+        <label>
+          Year
+          <input id="simpleYearInput" type="number" min="1900" max="2099" value="2027">
+        </label>
+        <label>
+          Paper size
+          <select id="simplePaperPresetInput">
+            <option value="a4">A4</option>
+            <option value="letter">US Letter</option>
+            <option value="a3">A3</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <label>
+          Month
+          <select id="previewMonthInput"></select>
+        </label>
+        <button id="simpleImageButton" class="simple-action secondary" type="button">Add month photo</button>
+        <input id="quickImageInput" type="file" accept="image/*" hidden>
+        <div class="simple-actions">
+          <button id="simpleAdvancedButton" class="simple-action" type="button">Advanced</button>
+          <button id="simplePrintButton" class="simple-action primary" type="button">Print</button>
+        </div>
+      </aside>
       <section class="toolbar" aria-label="Calendar settings">
         <div class="brand">
           <strong>Physicalendar</strong>
           <span>print calendar studio</span>
         </div>
+        <button id="advancedCloseButton" class="icon-button advanced-close" type="button" title="Return to calendar" aria-label="Return to calendar">←</button>
         <label>
           Source
           <select id="sourceSelect">
@@ -441,6 +475,17 @@
                 <button id="resetSourceXmlButton" type="button">Reset source</button>
               </div>
               <div id="sourceXmlStatus" class="source-status"></div>
+            </div>
+          </div>
+          <div class="panel-section">
+            <h2>Calculation hooks</h2>
+            <div class="source-editor">
+              <textarea id="hooksInput" spellcheck="false" aria-label="Calculation hooks JavaScript"></textarea>
+              <div class="source-actions">
+                <button id="applyHooksButton" type="button">Apply hooks</button>
+                <button id="resetHooksButton" type="button">Reset hooks</button>
+              </div>
+              <div id="hooksStatus" class="source-status"></div>
             </div>
           </div>
           <div class="panel-section">

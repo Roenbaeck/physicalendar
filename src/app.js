@@ -36,6 +36,7 @@ import {
 } from "./core/dom-preflight.js";
 import { parseIcsEvents, renderIcsCalendar } from "./core/calendar-ics.js";
 import { exportPanelSummary, pdfExportCommands } from "./core/export-commands.js";
+import { compileCalculationHooks, defaultCalculationHooks } from "./core/calculation-hooks.js";
 
 const state = {
   sourceDoc: null,
@@ -45,14 +46,27 @@ const state = {
   monthImageSettings: loadStoredImageSettings(),
   layout: loadStoredLayout(),
   previewZoom: loadStoredPreviewZoom(),
+  previewMonth: 1,
   customRules: loadStoredCustomRules(),
   customFacts: loadStoredCustomFacts(),
+  hookSource: loadStoredCalculationHooks(),
+  hookCalculations: [],
   bundlePdf: null,
   editingRuleId: null
 };
 const PANEL_COLLAPSE_KEY = "physicalendar.panelCollapsed";
 
 const elements = {
+  app: document.querySelector("#app"),
+  simpleSourceSelect: document.querySelector("#simpleSourceSelect"),
+  simpleYearInput: document.querySelector("#simpleYearInput"),
+  simplePaperPresetInput: document.querySelector("#simplePaperPresetInput"),
+  previewMonthInput: document.querySelector("#previewMonthInput"),
+  simpleImageButton: document.querySelector("#simpleImageButton"),
+  quickImageInput: document.querySelector("#quickImageInput"),
+  simpleAdvancedButton: document.querySelector("#simpleAdvancedButton"),
+  simplePrintButton: document.querySelector("#simplePrintButton"),
+  advancedCloseButton: document.querySelector("#advancedCloseButton"),
   sourceSelect: document.querySelector("#sourceSelect"),
   yearInput: document.querySelector("#yearInput"),
   localeInput: document.querySelector("#localeInput"),
@@ -120,6 +134,10 @@ const elements = {
   applySourceXmlButton: document.querySelector("#applySourceXmlButton"),
   resetSourceXmlButton: document.querySelector("#resetSourceXmlButton"),
   sourceXmlStatus: document.querySelector("#sourceXmlStatus"),
+  hooksInput: document.querySelector("#hooksInput"),
+  applyHooksButton: document.querySelector("#applyHooksButton"),
+  resetHooksButton: document.querySelector("#resetHooksButton"),
+  hooksStatus: document.querySelector("#hooksStatus"),
   localProjectStatus: document.querySelector("#localProjectStatus"),
   previewZoomInput: document.querySelector("#previewZoomInput"),
   previewZoomOutput: document.querySelector("#previewZoomOutput"),
@@ -152,15 +170,20 @@ const elements = {
 init();
 
 async function init() {
-  elements.sourceSelect.innerHTML = CALENDAR_SOURCES.map((source) => {
+  const sourceOptions = CALENDAR_SOURCES.map((source) => {
     return `<option value="${source.path}">${escapeHtml(source.label)}</option>`;
   }).join("");
+  elements.sourceSelect.innerHTML = sourceOptions;
+  elements.simpleSourceSelect.innerHTML = sourceOptions;
+  elements.simpleSourceSelect.value = elements.sourceSelect.value;
   elements.templateInput.innerHTML = LAYOUT_TEMPLATES.map((template) => {
     return `<option value="${escapeHtml(template.id)}">${escapeHtml(template.label)}</option>`;
   }).join("");
 
   writeLayoutControls(state.layout);
   writePreviewZoom(state.previewZoom);
+  writeCalculationHooks();
+  applyCalculationHooks({ quiet: true });
   renderImageInputs();
   renderCustomRules();
   renderCustomFacts();
@@ -172,7 +195,32 @@ async function init() {
 }
 
 function bindEvents() {
-  elements.sourceSelect.addEventListener("change", loadAndRender);
+  elements.sourceSelect.addEventListener("change", () => {
+    elements.simpleSourceSelect.value = elements.sourceSelect.value;
+    loadAndRender();
+  });
+  elements.simpleSourceSelect.addEventListener("change", () => {
+    elements.sourceSelect.value = elements.simpleSourceSelect.value;
+    loadAndRender();
+  });
+  elements.simpleYearInput.addEventListener("input", () => {
+    elements.yearInput.value = elements.simpleYearInput.value;
+    renderProject();
+  });
+  elements.simpleYearInput.addEventListener("change", () => {
+    elements.yearInput.value = elements.simpleYearInput.value;
+    renderProject();
+  });
+  elements.simplePaperPresetInput.addEventListener("change", applyPaperPreset);
+  elements.previewMonthInput.addEventListener("change", () => {
+    state.previewMonth = Number(elements.previewMonthInput.value || 1);
+    renderPreview(state.project, readSettings());
+  });
+  elements.simpleImageButton.addEventListener("click", () => elements.quickImageInput.click());
+  elements.quickImageInput.addEventListener("change", addQuickMonthImage);
+  elements.simpleAdvancedButton.addEventListener("click", () => setAppView("advanced"));
+  elements.advancedCloseButton.addEventListener("click", () => setAppView("simple"));
+  elements.simplePrintButton.addEventListener("click", openPrintRoute);
   elements.sourceImport.addEventListener("change", importSourceXml);
   elements.icsImport.addEventListener("change", importIcs);
   elements.saveLocalProjectButton.addEventListener("click", saveLocalProject);
@@ -195,6 +243,8 @@ function bindEvents() {
   elements.cancelRuleEditButton.addEventListener("click", cancelRuleEdit);
   elements.applySourceXmlButton.addEventListener("click", applySourceXml);
   elements.resetSourceXmlButton.addEventListener("click", resetSourceXml);
+  elements.applyHooksButton.addEventListener("click", applyCalculationHooks);
+  elements.resetHooksButton.addEventListener("click", resetCalculationHooks);
   elements.previewZoomInput.addEventListener("input", updatePreviewZoom);
   elements.previewZoomInput.addEventListener("change", updatePreviewZoom);
   elements.templateInput.addEventListener("change", () => {
@@ -207,6 +257,12 @@ function bindEvents() {
   for (const input of [elements.yearInput, elements.localeInput, elements.timeZoneInput, elements.weekSelect, elements.startDaySelect, elements.gmtInput]) {
     input.addEventListener("input", renderProject);
     input.addEventListener("change", renderProject);
+  }
+
+  for (const eventName of ["input", "change"]) {
+    elements.yearInput.addEventListener(eventName, () => {
+      elements.simpleYearInput.value = elements.yearInput.value;
+    });
   }
 
   for (const input of layoutInputs()) {
@@ -222,7 +278,7 @@ function bindEvents() {
     });
   }
 
-  elements.printButton.addEventListener("click", () => window.print());
+  elements.printButton.addEventListener("click", openPrintRoute);
   elements.exportSourceXmlButton.addEventListener("click", exportSourceXml);
   elements.exportFactsButton.addEventListener("click", exportGeneratedFacts);
   elements.exportIcsButton.addEventListener("click", exportIcs);
@@ -343,6 +399,69 @@ function setSourceStatus(message, level) {
   elements.sourceXmlStatus.dataset.level = level;
 }
 
+function writeCalculationHooks() {
+  elements.hooksInput.value = state.hookSource;
+}
+
+function applyCalculationHooks(options = {}) {
+  try {
+    const source = elements.hooksInput.value;
+
+    state.hookCalculations = compileCalculationHooks(source);
+    state.hookSource = source;
+    storeCalculationHooks(source);
+    elements.hooksStatus.textContent = state.hookCalculations.length === 0
+      ? "No custom hooks are active."
+      : `${state.hookCalculations.length} custom calculation hook${state.hookCalculations.length === 1 ? "" : "s"} applied.`;
+    elements.hooksStatus.dataset.level = "ok";
+    if (!options.quiet) {
+      renderProject();
+    }
+  } catch (error) {
+    elements.hooksStatus.textContent = error.message || String(error);
+    elements.hooksStatus.dataset.level = "error";
+  }
+}
+
+function resetCalculationHooks() {
+  state.hookSource = defaultCalculationHooks();
+  writeCalculationHooks();
+  applyCalculationHooks();
+}
+
+function setAppView(view) {
+  elements.app.dataset.view = view === "advanced" ? "advanced" : "simple";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function applyPaperPreset() {
+  const preset = elements.simplePaperPresetInput.value;
+  const presets = {
+    a4: { unit: "mm", paperWidth: 210, paperHeight: 297 },
+    a3: { unit: "mm", paperWidth: 297, paperHeight: 420 },
+    letter: { unit: "in", paperWidth: 8.5, paperHeight: 11 }
+  };
+
+  if (!presets[preset]) {
+    return;
+  }
+
+  state.layout = { ...state.layout, ...presets[preset] };
+  writeLayoutControls(state.layout);
+  storeLayout(state.layout);
+  renderProject();
+}
+
+async function addQuickMonthImage() {
+  const file = elements.quickImageInput.files?.[0];
+
+  if (file) {
+    await setMonthImage(state.previewMonth, file);
+  }
+
+  elements.quickImageInput.value = "";
+}
+
 function renderProject() {
   if (!state.sourceDoc) {
     return;
@@ -355,8 +474,9 @@ function renderProject() {
     updatePrintLayoutStyle(layout);
     state.project = buildCalendarProject(state.sourceDoc, settings, {
       customRules: state.customRules,
-      calculations: customFactCalculations()
+      calculations: [...customFactCalculations(), ...state.hookCalculations]
     });
+    renderMonthPicker(state.project);
     renderPreview(state.project, settings);
     renderEventResults(state.project.eventResults);
     renderCalculations(state.project.calculations);
@@ -420,6 +540,7 @@ function writeLayoutControls(layout) {
   elements.weekdaySizeInput.value = resolved.style.weekdaySize;
   elements.showMonthTitleInput.checked = resolved.showMonthTitle !== false;
   elements.infoTextInput.value = resolved.infoText;
+  elements.simplePaperPresetInput.value = paperPresetFor(resolved);
 }
 
 function layoutInputs() {
@@ -468,11 +589,15 @@ function ruleInputs() {
 
 function renderPreview(project, settings) {
   applyPreviewZoom();
-  elements.preview.innerHTML = renderPrintPages(project, settings, {
+  const page = project.pages.find((item) => item.month === state.previewMonth) || project.pages[0];
+  const previewProject = { ...project, pages: page ? [page] : [] };
+
+  elements.preview.innerHTML = renderPrintPages(previewProject, settings, {
     sourceLabel: state.sourceLabel,
     monthImages: state.monthImages,
     monthImageSettings: state.monthImageSettings,
-    layout: resolveLayout(state.layout)
+    layout: resolveLayout(state.layout),
+    interactive: true
   });
 
   for (const dayCell of elements.preview.querySelectorAll("[data-date]")) {
@@ -480,6 +605,27 @@ function renderPreview(project, settings) {
       elements.factsPanel.innerHTML = renderDayInspector(project, dayCell.dataset.date);
     });
   }
+
+  for (const button of elements.preview.querySelectorAll("[data-add-image-month]")) {
+    button.addEventListener("click", () => {
+      state.previewMonth = Number(button.dataset.addImageMonth || state.previewMonth);
+      elements.previewMonthInput.value = String(state.previewMonth);
+      elements.quickImageInput.click();
+    });
+  }
+}
+
+function renderMonthPicker(project) {
+  const pages = project?.pages || [];
+
+  if (!pages.some((page) => page.month === state.previewMonth)) {
+    state.previewMonth = pages[0]?.month || 1;
+  }
+
+  elements.previewMonthInput.innerHTML = pages.map((page) => {
+    return `<option value="${page.month}">${escapeHtml(page.name)}</option>`;
+  }).join("");
+  elements.previewMonthInput.value = String(state.previewMonth);
 }
 
 function updatePreviewZoom() {
@@ -1519,13 +1665,14 @@ async function exportBundle() {
   const imageEntries = imageEntriesFromMonthImages(state.monthImages);
   const settings = readSettings();
   const project = {
-    version: 4,
+    version: 5,
     savedAt: new Date().toISOString(),
     sourceLabel: state.sourceLabel,
     settings,
     layout: resolveLayout(state.layout),
     customRules: state.customRules,
     customFacts: state.customFacts,
+    calculationHooks: state.hookSource,
     monthImageSettings: state.monthImageSettings,
     monthImageRefs: projectImageRefs(imageEntries),
     generatedPdf: state.bundlePdf ? {
@@ -1641,7 +1788,7 @@ function createProjectSnapshot(options = {}) {
   const settings = readSettings();
   const layout = resolveLayout(state.layout);
   const project = {
-    version: 4,
+    version: 5,
     savedAt: new Date().toISOString(),
     sourceLabel: state.sourceLabel,
     sourceXml: serializeXml(state.sourceDoc),
@@ -1650,6 +1797,7 @@ function createProjectSnapshot(options = {}) {
     exports: currentExportMetadata(settings, layout),
     customRules: state.customRules,
     customFacts: state.customFacts,
+    calculationHooks: state.hookSource,
     monthImageSettings: state.monthImageSettings
   };
 
@@ -1700,6 +1848,7 @@ function applyProjectSnapshot(project, options = {}) {
   state.layout = resolveLayout(project.layout || {});
   state.customRules = Array.isArray(project.customRules) ? project.customRules : [];
   state.customFacts = Array.isArray(project.customFacts) ? project.customFacts : [];
+  state.hookSource = typeof project.calculationHooks === "string" ? project.calculationHooks : defaultCalculationHooks();
   state.bundlePdf = options.pdf?.bytes ? {
     name: project.generatedPdf?.name || options.pdf.path.split("/").pop() || `physicalendar-${project.settings.year}.pdf`,
     size: options.pdf.size,
@@ -1708,6 +1857,8 @@ function applyProjectSnapshot(project, options = {}) {
   writeSettings(project.settings);
   writeLayoutControls(state.layout);
   writeSourceEditor();
+  writeCalculationHooks();
+  applyCalculationHooks({ quiet: true });
   storeImages(state.monthImages);
   storeImageSettings(state.monthImageSettings);
   storeLayout(state.layout);
@@ -1916,17 +2067,42 @@ function loadStoredCustomFacts() {
   }
 }
 
+function loadStoredCalculationHooks() {
+  return localStorage.getItem("physicalendar.calculationHooks") ?? defaultCalculationHooks();
+}
+
+function storeCalculationHooks(source) {
+  localStorage.setItem("physicalendar.calculationHooks", String(source || ""));
+}
+
 function storeCustomFacts(facts) {
   localStorage.setItem("physicalendar.customFacts", JSON.stringify(facts));
 }
 
 function writeSettings(settings) {
   elements.yearInput.value = settings.year || 2027;
+  elements.simpleYearInput.value = elements.yearInput.value;
   elements.localeInput.value = settings.locale || sourceDocumentLocale(state.sourceDoc) || selectedSourceLocale() || "en-US";
   elements.timeZoneInput.value = settings.timeZone || defaultTimeZoneForLocale(elements.localeInput.value);
   elements.weekSelect.value = settings.weekNumbering || "ISO";
   elements.startDaySelect.value = settings.startingWeekday || 1;
   elements.gmtInput.value = settings.gmt ?? 1;
+}
+
+function paperPresetFor(layout) {
+  if (layout.unit === "mm" && Number(layout.paperWidth) === 210 && Number(layout.paperHeight) === 297) {
+    return "a4";
+  }
+
+  if (layout.unit === "mm" && Number(layout.paperWidth) === 297 && Number(layout.paperHeight) === 420) {
+    return "a3";
+  }
+
+  if (layout.unit === "in" && Number(layout.paperWidth) === 8.5 && Number(layout.paperHeight) === 11) {
+    return "letter";
+  }
+
+  return "custom";
 }
 
 function updatePrintLayoutStyle(layout) {
