@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Physicalendar</title>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body>
+    <main id="app" class="app-shell">
+      <section class="toolbar" aria-label="Calendar settings">
+        <div class="brand">
+          <strong>Physicalendar</strong>
+          <span>print calendar studio</span>
+        </div>
+        <label>
+          Source
+          <select id="sourceSelect">
+            <option value="./src/data/calendars/sweden.xml">Sweden</option>
+            <option value="./src/data/calendars/norway.xml">Norway</option>
+            <option value="./src/data/calendars/united-states.xml">United States</option>
+          </select>
+        </label>
+        <label>
+          Year
+          <input id="yearInput" type="number" min="1900" max="2099" value="2027">
+        </label>
+        <label>
+          Locale
+          <input id="localeInput" type="text" value="sv-SE" list="localeOptions">
+          <datalist id="localeOptions">
+            <option value="sv-SE"></option>
+            <option value="nb-NO"></option>
+            <option value="en-US"></option>
+            <option value="en-GB"></option>
+            <option value="de-DE"></option>
+            <option value="fr-FR"></option>
+          </datalist>
+        </label>
+        <label>
+          Time zone
+          <input id="timeZoneInput" type="text" value="Europe/Stockholm" list="timeZoneOptions">
+          <datalist id="timeZoneOptions">
+            <option value="Europe/Stockholm"></option>
+            <option value="Europe/Oslo"></option>
+            <option value="Europe/London"></option>
+            <option value="America/New_York"></option>
+            <option value="America/Chicago"></option>
+            <option value="America/Denver"></option>
+            <option value="America/Los_Angeles"></option>
+            <option value="UTC"></option>
+          </datalist>
+        </label>
+        <label>
+          Week
+          <select id="weekSelect">
+            <option value="ISO">ISO</option>
+            <option value="US">US</option>
+          </select>
+        </label>
+        <label>
+          Starts
+          <select id="startDaySelect">
+            <option value="1">Mon</option>
+            <option value="7">Sun</option>
+            <option value="6">Sat</option>
+          </select>
+        </label>
+        <label>
+          GMT
+          <input id="gmtInput" type="number" min="-12" max="12" value="1">
+        </label>
+        <label>
+          Import XML
+          <input id="sourceImport" type="file" accept=".xml,text/xml,application/xml">
+        </label>
+        <label>
+          Import ICS
+          <input id="icsImport" type="file" accept=".ics,text/calendar">
+        </label>
+        <button id="printButton" class="icon-button" type="button" title="Print or save PDF" aria-label="Print or save PDF">⎙</button>
+        <button id="exportSourceXmlButton" class="icon-button" type="button" title="Download source XML" aria-label="Download source XML">XML</button>
+        <button id="exportFactsButton" class="icon-button" type="button" title="Download generated facts XML" aria-label="Download generated facts XML">⇩</button>
+        <button id="exportIcsButton" class="icon-button" type="button" title="Download events as ICS" aria-label="Download events as ICS">ICS</button>
+        <button id="exportPrintHtmlButton" class="icon-button" type="button" title="Download standalone print HTML" aria-label="Download standalone print HTML">⌁</button>
+        <button id="openPrintRouteButton" class="icon-button" type="button" title="Open print route" aria-label="Open print route">↗</button>
+      </section>
+
+      <section class="workspace">
+        <aside class="side-panel">
+          <div class="panel-section">
+            <h2>Preflight</h2>
+            <div id="preflightPanel" class="preflight-list"></div>
+          </div>
+          <div class="panel-section">
+            <h2>Export</h2>
+            <div class="export-controls">
+              <dl id="exportSummary" class="export-summary"></dl>
+              <label>
+                Print HTML
+                <input id="printHtmlNameOutput" type="text" readonly>
+              </label>
+              <label>
+                PDF command
+                <textarea id="pdfCommandOutput" rows="3" readonly></textarea>
+              </label>
+              <label>
+                Verify command
+                <textarea id="pdfVerifyCommandOutput" rows="3" readonly></textarea>
+              </label>
+            </div>
+          </div>
+          <div class="panel-section">
+            <h2>Project</h2>
+            <div class="project-actions">
+              <button id="saveLocalProjectButton" type="button">Save local</button>
+              <button id="restoreLocalProjectButton" type="button">Restore local</button>
+              <button id="clearLocalProjectButton" type="button">Clear local</button>
+              <button id="exportProjectButton" type="button">Save project</button>
+              <button id="exportBundleButton" type="button">Save bundle</button>
+              <button id="downloadBundlePdfButton" type="button" disabled>Download bundled PDF</button>
+              <label class="file-action">
+                Attach PDF
+                <input id="bundlePdfInput" type="file" accept=".pdf,application/pdf">
+              </label>
+              <label class="file-action">
+                Load project
+                <input id="projectImport" type="file" accept=".json,application/json">
+              </label>
+              <label class="file-action">
+                Load bundle
+                <input id="bundleImport" type="file" accept=".zip,application/zip">
+              </label>
+              <div id="localProjectStatus" class="local-project-status"></div>
+            </div>
+          </div>
+          <div class="panel-section">
+            <h2>Layout</h2>
+            <div class="layout-controls">
+              <label>
+                Template
+                <select id="templateInput"></select>
+              </label>
+              <label>
+                Unit
+                <select id="unitInput">
+                  <option value="mm">mm</option>
+                  <option value="in">in</option>
+                  <option value="pt">pt</option>
+                  <option value="cm">cm</option>
+                </select>
+              </label>
+              <label>
+                Width
+                <input id="paperWidthInput" type="number" min="1" step="0.1" value="210">
+              </label>
+              <label>
+                Height
+                <input id="paperHeightInput" type="number" min="1" step="0.1" value="297">
+              </label>
+              <label>
+                Top
+                <input id="marginTopInput" type="number" min="0" step="0.1" value="15">
+              </label>
+              <label>
+                Right
+                <input id="marginRightInput" type="number" min="0" step="0.1" value="10">
+              </label>
+              <label>
+                Bottom
+                <input id="marginBottomInput" type="number" min="0" step="0.1" value="8">
+              </label>
+              <label>
+                Left
+                <input id="marginLeftInput" type="number" min="0" step="0.1" value="10">
+              </label>
+              <label>
+                Image ratio
+                <select id="imageRatioInput">
+                  <option value="4/3">4:3</option>
+                  <option value="3/2">3:2</option>
+                  <option value="16/9">16:9</option>
+                  <option value="1/1">1:1</option>
+                </select>
+              </label>
+              <label>
+                Title size
+                <input id="titleSizeInput" type="number" min="12" max="56" step="1" value="28">
+              </label>
+              <label>
+                Weekday size
+                <input id="weekdaySizeInput" type="number" min="8" max="24" step="1" value="12">
+              </label>
+              <label class="check-row">
+                <input id="showMonthTitleInput" type="checkbox" checked>
+                Month title
+              </label>
+              <label>
+                Info text
+                <input id="infoTextInput" type="text" value="Physicalendar preview">
+              </label>
+            </div>
+          </div>
+          <div class="panel-section">
+            <h2>Rules</h2>
+            <form id="ruleForm" class="rule-form">
+              <label>
+                Name
+                <input id="ruleNameInput" type="text" value="Custom day">
+              </label>
+              <label>
+                Type
+                <select id="ruleTypeInput">
+                  <option value="fixed-date">Fixed date</option>
+                  <option value="fixed-iso-date">Exact date</option>
+                  <option value="nth-weekday">Nth weekday</option>
+                  <option value="last-weekday">Last weekday</option>
+                  <option value="easter-offset">Offset from Easter</option>
+                  <option value="sun-event-offset">Offset from sun event</option>
+                  <option value="moon-phase-offset">Offset from moon phase</option>
+                  <option value="anchor-offset">Offset from anchor</option>
+                  <option value="range-weekday">Weekday in date range</option>
+                </select>
+              </label>
+              <label>
+                Month
+                <select id="ruleMonthInput">
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </label>
+              <label>
+                Date
+                <input id="ruleDateInput" type="date" value="2027-01-01">
+              </label>
+              <label>
+                Day
+                <input id="ruleDayInput" type="number" min="1" max="31" value="1">
+              </label>
+              <label>
+                End day
+                <input id="ruleEndDayInput" type="number" min="1" max="31" value="7">
+              </label>
+              <label>
+                Weekday
+                <select id="ruleWeekdayInput">
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                  <option value="6">Saturday</option>
+                  <option value="7">Sunday</option>
+                </select>
+              </label>
+              <label>
+                Nth
+                <input id="ruleNthInput" type="number" min="1" max="5" value="1">
+              </label>
+              <label>
+                Offset days
+                <input id="ruleOffsetInput" type="number" value="0">
+              </label>
+              <label>
+                Anchor
+                <input id="ruleAnchorInput" type="text" value="tripStart" pattern="[A-Za-z_][A-Za-z0-9_.:-]*">
+              </label>
+              <label>
+                Sun event
+                <select id="ruleSunEventInput">
+                  <option value="springEquinox">Spring equinox</option>
+                  <option value="summerSolstice">Summer solstice</option>
+                  <option value="autumnEquinox">Autumn equinox</option>
+                  <option value="winterSolstice">Winter solstice</option>
+                </select>
+              </label>
+              <label>
+                Moon phase
+                <select id="ruleMoonPhaseInput">
+                  <option value="new">New</option>
+                  <option value="firstQuarter">First quarter</option>
+                  <option value="full">Full</option>
+                  <option value="lastQuarter">Last quarter</option>
+                </select>
+              </label>
+              <label class="check-row">
+                <input id="ruleHolidayInput" type="checkbox">
+                Holiday
+              </label>
+              <label class="check-row">
+                <input id="ruleFlagInput" type="checkbox">
+                Flag
+              </label>
+              <label>
+                Category
+                <input id="ruleCategoryInput" type="text" placeholder="observance">
+              </label>
+              <label>
+                Source
+                <input id="ruleSourceInput" type="text" placeholder="personal">
+              </label>
+              <label>
+                Priority
+                <input id="rulePriorityInput" type="number" value="0">
+              </label>
+              <label>
+                Class
+                <input id="ruleClassInput" type="text" placeholder="major-event">
+              </label>
+              <label>
+                Language
+                <input id="ruleLangInput" type="text" placeholder="sv">
+              </label>
+              <label>
+                Exact
+                <input id="ruleExpectedInput" type="number" min="0">
+              </label>
+              <label>
+                Min
+                <input id="ruleMinInput" type="number" min="0">
+              </label>
+              <label>
+                Max
+                <input id="ruleMaxInput" type="number" min="0">
+              </label>
+              <div class="rule-actions">
+                <button id="saveRuleButton" type="submit">Add rule</button>
+                <button id="cancelRuleEditButton" type="button" hidden>Cancel edit</button>
+              </div>
+              <div id="rulePreview" class="rule-preview" aria-live="polite"></div>
+            </form>
+            <div id="customRulesPanel" class="custom-rules"></div>
+          </div>
+          <div class="panel-section">
+            <h2>Generated Facts</h2>
+            <form id="factForm" class="rule-form">
+              <label>
+                Fact
+                <input id="factNameInput" type="text" value="customFact" pattern="[A-Za-z_][A-Za-z0-9_.:-]*">
+              </label>
+              <label>
+                Type
+                <select id="factTypeInput">
+                  <option value="fixed-date">Fixed date</option>
+                  <option value="nth-weekday">Nth weekday</option>
+                  <option value="last-weekday">Last weekday</option>
+                  <option value="easter-offset">Offset from Easter</option>
+                  <option value="sun-event-offset">Offset from sun event</option>
+                  <option value="moon-phase-offset">Offset from moon phase</option>
+                </select>
+              </label>
+              <label>
+                Month
+                <select id="factMonthInput">
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </label>
+              <label>
+                Day
+                <input id="factDayInput" type="number" min="1" max="31" value="1">
+              </label>
+              <label>
+                Weekday
+                <select id="factWeekdayInput">
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                  <option value="6">Saturday</option>
+                  <option value="7">Sunday</option>
+                </select>
+              </label>
+              <label>
+                Nth
+                <input id="factNthInput" type="number" min="1" max="5" value="1">
+              </label>
+              <label>
+                Offset days
+                <input id="factOffsetInput" type="number" value="0">
+              </label>
+              <label>
+                Sun event
+                <select id="factSunEventInput">
+                  <option value="springEquinox">Spring equinox</option>
+                  <option value="summerSolstice">Summer solstice</option>
+                  <option value="autumnEquinox">Autumn equinox</option>
+                  <option value="winterSolstice">Winter solstice</option>
+                </select>
+              </label>
+              <label>
+                Moon phase
+                <select id="factMoonPhaseInput">
+                  <option value="new">New</option>
+                  <option value="firstQuarter">First quarter</option>
+                  <option value="full">Full</option>
+                  <option value="lastQuarter">Last quarter</option>
+                </select>
+              </label>
+              <label>
+                Value
+                <input id="factValueInput" type="text" value="true">
+              </label>
+              <label>
+                Anchor
+                <input id="factAnchorInput" type="text" pattern="[A-Za-z_][A-Za-z0-9_.:-]*">
+              </label>
+              <div class="rule-actions">
+                <button type="submit">Add fact</button>
+              </div>
+            </form>
+            <div id="customFactsPanel" class="custom-rules"></div>
+          </div>
+          <div class="panel-section">
+            <h2>Source XML</h2>
+            <div class="source-editor">
+              <textarea id="sourceXmlInput" spellcheck="false"></textarea>
+              <div class="source-actions">
+                <button id="applySourceXmlButton" type="button">Apply XML</button>
+                <button id="resetSourceXmlButton" type="button">Reset source</button>
+              </div>
+              <div id="sourceXmlStatus" class="source-status"></div>
+            </div>
+          </div>
+          <div class="panel-section">
+            <h2>Images</h2>
+            <div id="imageInputs" class="image-list"></div>
+          </div>
+          <div class="panel-section">
+            <h2>Rule Results</h2>
+            <div id="eventResults" class="event-results"></div>
+          </div>
+          <div class="panel-section">
+            <h2>Calculations</h2>
+            <div id="calculationResults" class="calculation-results"></div>
+          </div>
+          <div class="panel-section">
+            <h2>Day Facts</h2>
+            <div id="factsPanel" class="facts-panel">Select a day.</div>
+          </div>
+        </aside>
+
+        <section class="preview-stage" aria-label="Calendar preview">
+          <div class="preview-toolbar">
+            <label>
+              Preview zoom
+              <input id="previewZoomInput" type="range" min="50" max="130" step="5" value="100">
+            </label>
+            <output id="previewZoomOutput" for="previewZoomInput">100%</output>
+          </div>
+          <div id="preview" class="preview" aria-label="Calendar pages"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

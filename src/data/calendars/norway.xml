@@ -1,0 +1,1686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- All code written by Lars Rönnbäck (so far) -->
+<calendar>
+	<year>
+		<month index="1">
+			<name>Januar</name>
+			<day index="1"/>
+			<day index="2">
+				<name>Dagfinn</name>
+				<name>Dagfrid</name>
+			</day>
+			<day index="3">
+				<name>Alfred</name>
+				<name>Alf</name>
+			</day>
+			<day index="4">
+				<name>Roar</name>
+				<name>Roger</name>
+			</day>
+			<day index="5">
+				<name>Hanna</name>
+				<name>Hanne</name>
+			</day>
+			<day index="6">
+				<name>Aslaug</name>
+				<name>Åslaug</name>
+			</day>
+			<day index="7">
+				<name>Eldbjørg</name>
+				<name>Knut</name>
+			</day>
+			<day index="8">
+				<name>Torfinn</name>
+				<name>Turid</name>
+			</day>
+			<day index="9">
+				<name>Gunnar</name>
+				<name>Gunn</name>
+			</day>
+			<day index="10">
+				<name>Sigmund</name>
+				<name>Sigrun</name>
+			</day>
+			<day index="11">
+				<name>Børge</name>
+				<name>Børre</name>
+			</day>
+			<day index="12">
+				<name>Reinhard</name>
+				<name>Reinert</name>
+			</day>
+			<day index="13">
+				<name>Gisle</name>
+				<name>Gislaug</name>
+			</day>
+			<day index="14">
+				<name>Herbjørn</name>
+				<name>Herbjørg</name>
+			</day>
+			<day index="15">
+				<name>Laurits</name>
+				<name>Laura</name>
+			</day>
+			<day index="16">
+				<name>Hjalmar</name>
+				<name>Hilmar</name>
+			</day>
+			<day index="17">
+				<name>Anton</name>
+				<name>Tønnes</name>
+				<name>Tony</name>
+			</day>
+			<day index="18">
+				<name>Hildur</name>
+				<name>Hild</name>
+			</day>
+			<day index="19">
+				<name>Marius</name>
+				<name>Margunn</name>
+			</day>
+			<day index="20">
+				<name>Fabian</name>
+				<name>Sebastian</name>
+				<name>Bastian</name>
+			</day>
+			<day index="21">
+				<name>Agnes</name>
+				<name>Agnete</name>
+			</day>
+			<day index="22">
+				<name>Ivan</name>
+				<name>Vanja</name>
+			</day>
+			<day index="23">
+				<name>Emil</name>
+				<name>Emilie</name>
+				<name>Emma</name>
+			</day>
+			<day index="24">
+				<name>Joar</name>
+				<name>Jarle</name>
+				<name>Jarl</name>
+			</day>
+			<day index="25">
+				<name>Paul</name>
+				<name>Pål</name>
+			</day>
+			<day index="26">
+				<name>Øystein</name>
+				<name>Esten</name>
+			</day>
+			<day index="27">
+				<name>Gaute</name>
+				<name>Gurly</name>
+				<name>Gry</name>
+			</day>
+			<day index="28">
+				<name>Karl</name>
+				<name>Karoline</name>
+			</day>
+			<day index="29">
+				<name>Herdis</name>
+				<name>Hermod</name>
+				<name>Hermann</name>
+			</day>
+			<day index="30">
+				<name>Gunnhild</name>
+				<name>Gunda</name>
+			</day>
+			<day index="31">
+				<name>Idun</name>
+				<name>Ivar</name>
+			</day>
+		</month>
+		<month index="2">
+			<name>Februar</name>
+			<day index="1">
+				<name>Birte</name>
+				<name>Bjarte</name>
+			</day>
+			<day index="2">
+				<name>Jomar</name>
+				<name>Jostein</name>
+			</day>
+			<day index="3">
+				<name>Ansgar</name>
+				<name>Asgeir</name>
+			</day>
+			<day index="4">
+				<name>Veronika</name>
+				<name>Vera</name>
+			</day>
+			<day index="5">
+				<name>Agate</name>
+				<name>Ågot</name>
+			</day>
+			<day index="6">
+				<name>Dortea</name>
+				<name>Dorte</name>
+			</day>
+			<day index="7">
+				<name>Rikard</name>
+				<name>Rigmor</name>
+				<name>Riborg</name>
+			</day>
+			<day index="8">
+				<name>Åshild</name>
+				<name>Åsne</name>
+			</day>
+			<day index="9">
+				<name>Lone</name>
+				<name>Leikny</name>
+			</day>
+			<day index="10">
+				<name>Ingfrid</name>
+				<name>Ingrid</name>
+			</day>
+			<day index="11">
+				<name>Ingve</name>
+				<name>Yngve</name>
+			</day>
+			<day index="12">
+				<name>Randulf</name>
+				<name>Randi</name>
+				<name>Ronja</name>
+			</day>
+			<day index="13">
+				<name>Svanhild</name>
+				<name>Svanlaug</name>
+			</day>
+			<day index="14">
+				<name>Hjørdis</name>
+				<name>Jardar</name>
+			</day>
+			<day index="15">
+				<name>Sigfred</name>
+				<name>Sigbjørn</name>
+			</day>
+			<day index="16">
+				<name>Julian</name>
+				<name>Juliane</name>
+				<name>Jill</name>
+			</day>
+			<day index="17">
+				<name>Aleksandra</name>
+				<name>Sandra</name>
+				<name>Sondre</name>
+			</day>
+			<day index="18">
+				<name>Frøydis</name>
+				<name>Frode</name>
+			</day>
+			<day index="19">
+				<name>Ella</name>
+				<name>Elna</name>
+			</day>
+			<day index="20">
+				<name>Halldis</name>
+				<name>Halldor</name>
+			</day>
+			<day index="21">
+				<name>Samuel</name>
+				<name>Selma</name>
+				<name>Celine</name>
+			</day>
+			<day index="22">
+				<name>Tina</name>
+				<name>Tine</name>
+				<name>Tim</name>
+			</day>
+			<day index="23">
+				<name>Torstein</name>
+				<name>Torunn</name>
+			</day>
+			<day index="24">
+				<name>Mattias</name>
+				<name>Mattis</name>
+				<name>Mats</name>
+			</day>
+			<day index="25">
+				<name>Viktor</name>
+				<name>Viktoria</name>
+			</day>
+			<day index="26">
+				<name>Inger</name>
+				<name>Ingjerd</name>
+			</day>
+			<day index="27">
+				<name>Laila</name>
+				<name>Lill</name>
+			</day>
+			<day index="28">
+				<name>Marina</name>
+				<name>Maren</name>
+			</day>
+      <day index="29" leap="1"/>
+    </month>
+		<month index="3">
+			<name>Mars</name>
+			<day index="1">
+				<name>Audny</name>
+				<name>Audun</name>
+			</day>
+			<day index="2">
+				<name>Erna</name>
+				<name>Ernst</name>
+			</day>
+			<day index="3">
+				<name>Gunnbjørg</name>
+				<name>Gunnveig</name>
+			</day>
+			<day index="4">
+				<name>Ada</name>
+				<name>Adrian</name>
+			</day>
+			<day index="5">
+				<name>Patrick</name>
+				<name>Patricia</name>
+			</day>
+			<day index="6">
+				<name>Annfrid</name>
+				<name>Andor</name>
+			</day>
+			<day index="7">
+				<name>Arild</name>
+				<name>Are</name>
+			</day>
+			<day index="8">
+				<name>Beate</name>
+				<name>Betty</name>
+				<name>Bettina</name>
+			</day>
+			<day index="9">
+				<name>Sverre</name>
+				<name>Sindre</name>
+			</day>
+			<day index="10">
+				<name>Edel</name>
+				<name>Edle</name>
+			</day>
+			<day index="11">
+				<name>Edvin</name>
+				<name>Tale</name>
+			</day>
+			<day index="12">
+				<name>Gregor</name>
+				<name>Gro</name>
+			</day>
+			<day index="13">
+				<name>Greta</name>
+				<name>Grete</name>
+			</day>
+			<day index="14">
+				<name>Mathilde</name>
+				<name>Mette</name>
+			</day>
+			<day index="15">
+				<name>Christel</name>
+				<name>Christer</name>
+				<name>Chris</name>
+			</day>
+			<day index="16">
+				<name>Gudmund</name>
+				<name>Gudny</name>
+			</day>
+			<day index="17">
+				<name>Gjertrud</name>
+				<name>Trude</name>
+			</day>
+			<day index="18">
+				<name>Aleksander</name>
+				<name>Sander</name>
+				<name>Edvard</name>
+			</day>
+			<day index="19">
+				<name>Josef</name>
+				<name>Josefine</name>
+			</day>
+			<day index="20">
+				<name>Joakim</name>
+				<name>Kim</name>
+			</day>
+			<day index="21">
+				<name>Bendik</name>
+				<name>Bengt</name>
+				<name>Bent</name>
+			</day>
+			<day index="22">
+				<name>Paula</name>
+				<name>Pauline</name>
+			</day>
+			<day index="23">
+				<name>Gerda</name>
+				<name>Gerd</name>
+			</day>
+			<day index="24">
+				<name>Ulrikke</name>
+				<name>Rikke</name>
+			</day>
+			<day index="25">
+				<name>Maria</name>
+				<name>Marie</name>
+				<name>Mari</name>
+			</day>
+			<day index="26">
+				<name>Gabriel</name>
+				<name>Glenn</name>
+			</day>
+			<day index="27">
+				<name>Rudolf</name>
+				<name>Rudi</name>
+			</day>
+			<day index="28">
+				<name>Åsta</name>
+				<name>Åste</name>
+			</day>
+			<day index="29">
+				<name>Jonas</name>
+				<name>Jonatan</name>
+			</day>
+			<day index="30">
+				<name>Holger</name>
+				<name>Olga</name>
+			</day>
+			<day index="31">
+				<name>Vebjørn</name>
+				<name>Vegard</name>
+			</day>
+		</month>
+		<month index="4">
+			<name>April</name>
+			<day index="1">
+				<name>Aron</name>
+				<name>Arve</name>
+				<name>Arvid</name>
+			</day>
+			<day index="2">
+				<name>Sigvard</name>
+				<name>Sivert</name>
+			</day>
+			<day index="3">
+				<name>Gunnvald</name>
+				<name>Gunnvor</name>
+			</day>
+			<day index="4">
+				<name>Nanna</name>
+				<name>Nancy</name>
+				<name>Nina</name>
+			</day>
+			<day index="5">
+				<name>Irene</name>
+				<name>Eirin</name>
+				<name>Eril</name>
+			</day>
+			<day index="6">
+				<name>Åsmund</name>
+				<name>Asmund</name>
+			</day>
+			<day index="7">
+				<name>Oddveig</name>
+				<name>Oddvin</name>
+			</day>
+			<day index="8">
+				<name>Asle</name>
+				<name>Atle</name>
+			</day>
+			<day index="9">
+				<name>Rannveig</name>
+				<name>Rønnaug</name>
+			</day>
+			<day index="10">
+				<name>Ingvald</name>
+				<name>Ingveig</name>
+			</day>
+			<day index="11">
+				<name>Ylva</name>
+				<name>Ulf</name>
+			</day>
+			<day index="12">
+				<name>Julius</name>
+				<name>Julie</name>
+			</day>
+			<day index="13">
+				<name>Asta</name>
+				<name>Astrid</name>
+			</day>
+			<day index="14">
+				<name>Ellinor</name>
+				<name>Nora</name>
+			</day>
+			<day index="15">
+				<name>Oda</name>
+				<name>Odin</name>
+				<name>Odd</name>
+			</day>
+			<day index="16">
+				<name>Magnus</name>
+				<name>Mons</name>
+			</day>
+			<day index="17">
+				<name>Elise</name>
+				<name>Else</name>
+				<name>Elsa</name>
+			</day>
+			<day index="18">
+				<name>Eilen</name>
+				<name>Eilert</name>
+			</day>
+			<day index="19">
+				<name>Arnfinn</name>
+				<name>Arnstein</name>
+			</day>
+			<day index="20">
+				<name>Kjellaug</name>
+				<name>Kjellrun</name>
+			</day>
+			<day index="21">
+				<name>Jeanette</name>
+				<name>Jannike</name>
+			</day>
+			<day index="22">
+				<name>Oddgeir</name>
+				<name>Oddny</name>
+			</day>
+			<day index="23">
+				<name>Georg</name>
+				<name>Jørgen</name>
+				<name>Jørg</name>
+			</day>
+			<day index="24">
+				<name>Albert</name>
+				<name>Olaug</name>
+			</day>
+			<day index="25">
+				<name>Markus</name>
+				<name>Mark</name>
+			</day>
+			<day index="26">
+				<name>Terese</name>
+				<name>Tea</name>
+			</day>
+			<day index="27">
+				<name>Charles</name>
+				<name>Charlotte</name>
+				<name>Lotte</name>
+			</day>
+			<day index="28">
+				<name>Vivi</name>
+				<name>Vivian</name>
+			</day>
+			<day index="29">
+				<name>Toralf</name>
+				<name>Torolf</name>
+			</day>
+			<day index="30">
+				<name>Gina</name>
+				<name>Gitte</name>
+			</day>
+		</month>
+		<month index="5">
+			<name>Mai</name>
+			<day index="1">
+				<name>Filip</name>
+				<name>Valborg</name>
+			</day>
+			<day index="2">
+				<name>Åsa</name>
+				<name>Åse</name>
+			</day>
+			<day index="3">
+				<name>Gjermund</name>
+				<name>Gøril</name>
+			</day>
+			<day index="4">
+				<name>Monika</name>
+				<name>Mona</name>
+			</day>
+			<day index="5">
+				<name>Gudbrand</name>
+				<name>Gullborg</name>
+			</day>
+			<day index="6">
+				<name>Guri</name>
+				<name>Gyri</name>
+			</day>
+			<day index="7">
+				<name>Maia</name>
+				<name>Mai</name>
+				<name>Maiken</name>
+			</day>
+			<day index="8">
+				<name>Åge</name>
+				<name>Åke</name>
+			</day>
+			<day index="9">
+				<name>Kasper</name>
+				<name>Jesper</name>
+			</day>
+			<day index="10">
+				<name>Asbjørg</name>
+				<name>Asbjørn</name>
+				<name>Espen</name>
+			</day>
+			<day index="11">
+				<name>Magda</name>
+				<name>Malvin</name>
+			</day>
+			<day index="12">
+				<name>Normann</name>
+				<name>Norvald</name>
+			</day>
+			<day index="13">
+				<name>Linda</name>
+				<name>Line</name>
+				<name>Linn</name>
+			</day>
+			<day index="14">
+				<name>Kristian</name>
+				<name>Kristen</name>
+				<name>Karsten</name>
+			</day>
+			<day index="15">
+				<name>Hallvard</name>
+				<name>Hallvor</name>
+			</day>
+			<day index="16">
+				<name>Sara</name>
+				<name>Siren</name>
+			</day>
+			<day index="17">
+				<name>Harald</name>
+				<name>Ragnhild</name>
+			</day>
+			<day index="18">
+				<name>Eirik</name>
+				<name>Erik</name>
+				<name>Erika</name>
+			</day>
+			<day index="19">
+				<name>Torjus</name>
+				<name>Torje</name>
+				<name>Truls</name>
+			</day>
+			<day index="20">
+				<name>Bjørnar</name>
+				<name>Bjørnhild</name>
+			</day>
+			<day index="21">
+				<name>Helene</name>
+				<name>Ellen</name>
+				<name>Eli</name>
+			</day>
+			<day index="22">
+				<name>Henning</name>
+				<name>Henny</name>
+			</day>
+			<day index="23">
+				<name>Oddleif</name>
+				<name>Oddlaug</name>
+			</day>
+			<day index="24">
+				<name>Ester</name>
+				<name>Iris</name>
+			</day>
+			<day index="25">
+				<name>Ragna</name>
+				<name>Ragnar</name>
+			</day>
+			<day index="26">
+				<name>Annbjørg</name>
+				<name>Annlaug</name>
+			</day>
+			<day index="27">
+				<name>Katinka</name>
+				<name>Cato</name>
+			</day>
+			<day index="28">
+				<name>Vilhelm</name>
+				<name>William</name>
+				<name>Willy</name>
+			</day>
+			<day index="29">
+				<name>Magnar</name>
+				<name>Magnhild</name>
+			</day>
+			<day index="30">
+				<name>Gard</name>
+				<name>Geir</name>
+			</day>
+			<day index="31">
+				<name>Pernille</name>
+				<name>Preben</name>
+			</day>
+		</month>
+		<month index="6">
+			<name>Juni</name>
+			<day index="1">
+				<name>June</name>
+				<name>Juni</name>
+			</day>
+			<day index="2">
+				<name>Runa</name>
+				<name>Runar</name>
+				<name>Rune</name>
+			</day>
+			<day index="3">
+				<name>Rasmus</name>
+				<name>Rakel</name>
+			</day>
+			<day index="4">
+				<name>Heidi</name>
+				<name>Heid</name>
+			</day>
+			<day index="5">
+				<name>Torbjørg</name>
+				<name>Torbjørn</name>
+				<name>Torben</name>
+			</day>
+			<day index="6">
+				<name>Gustav</name>
+				<name>Gyda</name>
+			</day>
+			<day index="7">
+				<name>Robert</name>
+				<name>Robin</name>
+			</day>
+			<day index="8">
+				<name>Renate</name>
+				<name>René</name>
+			</day>
+			<day index="9">
+				<name>Kolbein</name>
+				<name>Kolbjørn</name>
+			</day>
+			<day index="10">
+				<name>Ingolf</name>
+				<name>Ingunn</name>
+			</day>
+			<day index="11">
+				<name>Borgar</name>
+				<name>Bjørge</name>
+				<name>Bjørg</name>
+			</day>
+			<day index="12">
+				<name>Sigfrid</name>
+				<name>Sigrid</name>
+				<name>Siri</name>
+			</day>
+			<day index="13">
+				<name>Tone</name>
+				<name>Tonje</name>
+				<name>Tanja</name>
+			</day>
+			<day index="14">
+				<name>Erlend</name>
+				<name>Erland</name>
+			</day>
+			<day index="15">
+				<name>Vigdis</name>
+				<name>Viggo</name>
+			</day>
+			<day index="16">
+				<name>Torhild</name>
+				<name>Toril</name>
+				<name>Tiril</name>
+			</day>
+			<day index="17">
+				<name>Botolf</name>
+				<name>Bodil</name>
+			</day>
+			<day index="18">
+				<name>Bjarne</name>
+				<name>Bjørn</name>
+			</day>
+			<day index="19">
+				<name>Erling</name>
+				<name>Elling</name>
+			</day>
+			<day index="20">
+				<name>Salve</name>
+				<name>Sølve</name>
+				<name>Sølvi</name>
+			</day>
+			<day index="21">
+				<name>Agnar</name>
+				<name>Annar</name>
+			</day>
+			<day index="22">
+				<name>Håkon</name>
+				<name>Maud</name>
+			</day>
+			<day index="23">
+				<name>Elfrid</name>
+				<name>Eldrid</name>
+			</day>
+			<day index="24">
+				<name>Johannes</name>
+				<name>Jon</name>
+				<name>Hans</name>
+			</day>
+			<day index="25">
+				<name>Jørund</name>
+				<name>Jorunn</name>
+			</day>
+			<day index="26">
+				<name>Jenny</name>
+				<name>Jonny</name>
+			</day>
+			<day index="27">
+				<name>Aina</name>
+				<name>Ina</name>
+				<name>Ine</name>
+			</day>
+			<day index="28">
+				<name>Lea</name>
+				<name>Leo</name>
+				<name>Leon</name>
+			</day>
+			<day index="29">
+				<name>Peter</name>
+				<name>Petter</name>
+				<name>Per</name>
+			</day>
+			<day index="30">
+				<name>Solbjørg</name>
+				<name>Solgunn</name>
+			</day>
+		</month>
+		<month index="7">
+			<name>Juli</name>
+			<day index="1">
+				<name>Ask</name>
+				<name>Embla</name>
+			</day>
+			<day index="2">
+				<name>Kjartan</name>
+				<name>Kjellfrid</name>
+			</day>
+			<day index="3">
+				<name>Andrea</name>
+				<name>Andrine</name>
+				<name>André</name>
+			</day>
+			<day index="4">
+				<name>Ulrik</name>
+				<name>Ulla</name>
+			</day>
+			<day index="5">
+				<name>Mirjam</name>
+				<name>Mina</name>
+			</day>
+			<day index="6">
+				<name>Torgrim</name>
+				<name>Torgunn</name>
+			</day>
+			<day index="7">
+				<name>Håvard</name>
+				<name>Hulda</name>
+			</day>
+			<day index="8">
+				<name>Sunniva</name>
+				<name>Synnøve</name>
+				<name>Synne</name>
+			</day>
+			<day index="9">
+				<name>Gøran</name>
+				<name>Jøran</name>
+				<name>Ørjan</name>
+			</day>
+			<day index="10">
+				<name>Anita</name>
+				<name>Anja</name>
+			</day>
+			<day index="11">
+				<name>Kjetil</name>
+				<name>Kjell</name>
+			</day>
+			<day index="12">
+				<name>Elias</name>
+				<name>Eldar</name>
+			</day>
+			<day index="13">
+				<name>Mildrid</name>
+				<name>Melissa</name>
+				<name>Mia</name>
+			</day>
+			<day index="14">
+				<name>Solfrid</name>
+				<name>Solrun</name>
+			</day>
+			<day index="15">
+				<name>Oddmund</name>
+				<name>Oddrun</name>
+			</day>
+			<day index="16">
+				<name>Susanne</name>
+				<name>Sanna</name>
+			</day>
+			<day index="17">
+				<name>Guttorm</name>
+				<name>Gorm</name>
+			</day>
+			<day index="18">
+				<name>Arnulf</name>
+				<name>Ørnulf</name>
+			</day>
+			<day index="19">
+				<name>Gerhard</name>
+				<name>Gjert</name>
+			</day>
+			<day index="20">
+				<name>Margareta</name>
+				<name>Margit</name>
+				<name>Marit</name>
+			</day>
+			<day index="21">
+				<name>Johanne</name>
+				<name>Janne</name>
+				<name>Jane</name>
+			</day>
+			<day index="22">
+				<name>Malene</name>
+				<name>Malin</name>
+				<name>Mali</name>
+			</day>
+			<day index="23">
+				<name>Brita</name>
+				<name>Brit</name>
+				<name>Britt</name>
+			</day>
+			<day index="24">
+				<name>Kristine</name>
+				<name>Kristin</name>
+				<name>Kristi</name>
+			</day>
+			<day index="25">
+				<name>Jakob</name>
+				<name>Jack</name>
+				<name>Jim</name>
+			</day>
+			<day index="26">
+				<name>Anna</name>
+				<name>Anne</name>
+				<name>Ane</name>
+			</day>
+			<day index="27">
+				<name>Marita</name>
+				<name>Rita</name>
+			</day>
+			<day index="28">
+				<name>Reidar</name>
+				<name>Reidun</name>
+			</day>
+			<day index="29">
+				<name>Olav</name>
+				<name>Ola</name>
+				<name>Ole</name>
+			</day>
+			<day index="30">
+				<name>Aurora</name>
+				<name>Audhild</name>
+				<name>Aud</name>
+			</day>
+			<day index="31">
+				<name>Elin</name>
+				<name>Eline</name>
+			</day>
+		</month>
+		<month index="8">
+			<name>August</name>
+			<day index="1">
+				<name>Peder</name>
+				<name>Petra</name>
+			</day>
+			<day index="2">
+				<name>Karen</name>
+				<name>Karin</name>
+			</day>
+			<day index="3">
+				<name>Oline</name>
+				<name>Oliver</name>
+				<name>Olve</name>
+			</day>
+			<day index="4">
+				<name>Arnhild</name>
+				<name>Arna</name>
+				<name>Arnt</name>
+			</day>
+			<day index="5">
+				<name>Osvald</name>
+				<name>Oskar</name>
+			</day>
+			<day index="6">
+				<name>Gunnlaug</name>
+				<name>Gunnleiv</name>
+			</day>
+			<day index="7">
+				<name>Didrik</name>
+				<name>Doris</name>
+			</day>
+			<day index="8">
+				<name>Evy</name>
+				<name>Yvonne</name>
+			</day>
+			<day index="9">
+				<name>Ronald</name>
+				<name>Ronny</name>
+			</day>
+			<day index="10">
+				<name>Lorents</name>
+				<name>Lars</name>
+				<name>Lasse</name>
+			</day>
+			<day index="11">
+				<name>Torvald</name>
+				<name>Tarald</name>
+			</day>
+			<day index="12">
+				<name>Klara</name>
+				<name>Camilla</name>
+			</day>
+			<day index="13">
+				<name>Anny</name>
+				<name>Anine</name>
+				<name>Ann</name>
+			</day>
+			<day index="14">
+				<name>Hallgeir</name>
+				<name>Hallgjerd</name>
+			</day>
+			<day index="15">
+				<name>Margot</name>
+				<name>Mary</name>
+				<name>Marielle</name>
+			</day>
+			<day index="16">
+				<name>Brynjulf</name>
+				<name>Brynhild</name>
+			</day>
+			<day index="17">
+				<name>Verner</name>
+				<name>Wenche</name>
+			</day>
+			<day index="18">
+				<name>Tormod</name>
+				<name>Torodd</name>
+			</day>
+			<day index="19">
+				<name>Sigvald</name>
+				<name>Sigve</name>
+			</day>
+			<day index="20">
+				<name>Bernhard</name>
+				<name>Bernt</name>
+			</day>
+			<day index="21">
+				<name>Ragnvald</name>
+				<name>Ragni</name>
+			</day>
+			<day index="22">
+				<name>Harriet</name>
+				<name>Harry</name>
+			</day>
+			<day index="23">
+				<name>Signe</name>
+				<name>Signy</name>
+			</day>
+			<day index="24">
+				<name>Belinda</name>
+				<name>Bertil</name>
+			</day>
+			<day index="25">
+				<name>Ludvig</name>
+				<name>Lovise</name>
+				<name>Louise</name>
+			</day>
+			<day index="26">
+				<name>Øyvind</name>
+				<name>Eivind</name>
+				<name>Even</name>
+			</day>
+			<day index="27">
+				<name>Roald</name>
+				<name>Rolf</name>
+			</day>
+			<day index="28">
+				<name>Artur</name>
+				<name>August</name>
+			</day>
+			<day index="29">
+				<name>Johan</name>
+				<name>Jone</name>
+				<name>Jo</name>
+			</day>
+			<day index="30">
+				<name>Benjamin</name>
+				<name>Ben</name>
+			</day>
+			<day index="31">
+				<name>Berta</name>
+				<name>Berte</name>
+			</day>
+		</month>
+		<month index="9">
+			<name>September</name>
+			<day index="1">
+				<name>Solveig</name>
+				<name>Solvår</name>
+			</day>
+			<day index="2">
+				<name>Lisa</name>
+				<name>Lise</name>
+				<name>Liss</name>
+			</day>
+			<day index="3">
+				<name>Alise</name>
+				<name>Alvhild</name>
+				<name>Vilde</name>
+			</day>
+			<day index="4">
+				<name>Ida</name>
+				<name>Idar</name>
+			</day>
+			<day index="5">
+				<name>Brede</name>
+				<name>Brian</name>
+				<name>Njål</name>
+			</day>
+			<day index="6">
+				<name>Sollaug</name>
+				<name>Siril</name>
+				<name>Siv</name>
+			</day>
+			<day index="7">
+				<name>Regine</name>
+				<name>Rose</name>
+			</day>
+			<day index="8">
+				<name>Amalie</name>
+				<name>Alma</name>
+				<name>Allan</name>
+			</day>
+			<day index="9">
+				<name>Trygve</name>
+				<name>Tyra</name>
+				<name>Trym</name>
+			</day>
+			<day index="10">
+				<name>Tord</name>
+				<name>Tor</name>
+			</day>
+			<day index="11">
+				<name>Dagny</name>
+				<name>Dag</name>
+			</day>
+			<day index="12">
+				<name>Jofrid</name>
+				<name>Jorid</name>
+			</day>
+			<day index="13">
+				<name>Stian</name>
+				<name>Stig</name>
+			</day>
+			<day index="14">
+				<name>Ingebjørg</name>
+				<name>Ingeborg</name>
+			</day>
+			<day index="15">
+				<name>Aslak</name>
+				<name>Eskil</name>
+			</day>
+			<day index="16">
+				<name>Lillian</name>
+				<name>Lilly</name>
+			</day>
+			<day index="17">
+				<name>Hildebjørg</name>
+				<name>Hildegunn</name>
+			</day>
+			<day index="18">
+				<name>Henriette</name>
+				<name>Henry</name>
+			</day>
+			<day index="19">
+				<name>Konstanse</name>
+				<name>Connie</name>
+			</day>
+			<day index="20">
+				<name>Tobias</name>
+				<name>Tage</name>
+			</day>
+			<day index="21">
+				<name>Trine</name>
+				<name>Trond</name>
+			</day>
+			<day index="22">
+				<name>Kyrre</name>
+				<name>Kåre</name>
+			</day>
+			<day index="23">
+				<name>Snorre</name>
+				<name>Snefrid</name>
+			</day>
+			<day index="24">
+				<name>Jan</name>
+				<name>Jens</name>
+			</day>
+			<day index="25">
+				<name>Ingvar</name>
+				<name>Yngvar</name>
+			</day>
+			<day index="26">
+				<name>Einar</name>
+				<name>Endre</name>
+			</day>
+			<day index="27">
+				<name>Dagmar</name>
+				<name>Dagrun</name>
+			</day>
+			<day index="28">
+				<name>Lena</name>
+				<name>Lene</name>
+			</day>
+			<day index="29">
+				<name>Mikael</name>
+				<name>Mikal</name>
+				<name>Mikkel</name>
+			</day>
+			<day index="30">
+				<name>Helga</name>
+				<name>Helge</name>
+				<name>Hege</name>
+			</day>
+		</month>
+		<month index="10">
+			<name>Oktober</name>
+			<day index="1">
+				<name>Rebekka</name>
+				<name>Remi</name>
+			</day>
+			<day index="2">
+				<name>Live</name>
+				<name>Liv</name>
+			</day>
+			<day index="3">
+				<name>Evald</name>
+				<name>Evelyn</name>
+			</day>
+			<day index="4">
+				<name>Frans</name>
+				<name>Frank</name>
+			</day>
+			<day index="5">
+				<name>Brynjar</name>
+				<name>Boye</name>
+				<name>Bo</name>
+			</day>
+			<day index="6">
+				<name>Målfrid</name>
+				<name>Møyfrid</name>
+			</day>
+			<day index="7">
+				<name>Birgitte</name>
+				<name>Birgit</name>
+				<name>Berit</name>
+			</day>
+			<day index="8">
+				<name>Benedikte</name>
+				<name>Bente</name>
+			</day>
+			<day index="9">
+				<name>Leidulf</name>
+				<name>Leif</name>
+			</day>
+			<day index="10">
+				<name>Fridtjof</name>
+				<name>Frida</name>
+				<name>Frits</name>
+			</day>
+			<day index="11">
+				<name>Kevin</name>
+				<name>Kennet</name>
+				<name>Kent</name>
+			</day>
+			<day index="12">
+				<name>Valter</name>
+				<name>Vibeke</name>
+			</day>
+			<day index="13">
+				<name>Torgeir</name>
+				<name>Terje</name>
+				<name>Tarjei</name>
+			</day>
+			<day index="14">
+				<name>Kaia</name>
+				<name>Kai</name>
+			</day>
+			<day index="15">
+				<name>Hedvig</name>
+				<name>Hedda</name>
+			</day>
+			<day index="16">
+				<name>Flemming</name>
+				<name>Finn</name>
+			</day>
+			<day index="17">
+				<name>Marta</name>
+				<name>Marte</name>
+			</day>
+			<day index="18">
+				<name>Kjersti</name>
+				<name>Kjerstin</name>
+			</day>
+			<day index="19">
+				<name>Tora</name>
+				<name>Tore</name>
+			</day>
+			<day index="20">
+				<name>Henrik</name>
+				<name>Heine</name>
+				<name>Henrikke</name>
+			</day>
+			<day index="21">
+				<name>Bergljot</name>
+				<name>Birger</name>
+			</day>
+			<day index="22">
+				<name>Karianne</name>
+				<name>Karine</name>
+				<name>Kine</name>
+			</day>
+			<day index="23">
+				<name>Severin</name>
+				<name>Søren</name>
+			</day>
+			<day index="24">
+				<name>Eilif</name>
+				<name>Eivor</name>
+			</day>
+			<day index="25">
+				<name>Margrete</name>
+				<name>Merete</name>
+				<name>Märtha</name>
+			</day>
+			<day index="26">
+				<name>Amandus</name>
+				<name>Amanda</name>
+			</day>
+			<day index="27">
+				<name>Sturla</name>
+				<name>Sture</name>
+			</day>
+			<day index="28">
+				<name>Simon</name>
+				<name>Simen</name>
+			</day>
+			<day index="29">
+				<name>Noralf</name>
+				<name>Norunn</name>
+			</day>
+			<day index="30">
+				<name>Aksel</name>
+				<name>Åmund</name>
+				<name>Ove</name>
+			</day>
+			<day index="31">
+				<name>Edit</name>
+				<name>Edna</name>
+			</day>
+		</month>
+		<month index="11">
+			<name>November</name>
+			<day index="1">
+				<name>Veslemøy</name>
+				<name>Vetle</name>
+			</day>
+			<day index="2">
+				<name>Tove</name>
+				<name>Tuva</name>
+			</day>
+			<day index="3">
+				<name>Raymond</name>
+				<name>Roy</name>
+			</day>
+			<day index="4">
+				<name>Otto</name>
+				<name>Ottar</name>
+			</day>
+			<day index="5">
+				<name>Egil</name>
+				<name>Egon</name>
+			</day>
+			<day index="6">
+				<name>Leonard</name>
+				<name>Lennart</name>
+			</day>
+			<day index="7">
+				<name>Ingebrigt</name>
+				<name>Ingelin</name>
+			</day>
+			<day index="8">
+				<name>Ingvild</name>
+				<name>Yngvild</name>
+			</day>
+			<day index="9">
+				<name>Tordis</name>
+				<name>Teodor</name>
+			</day>
+			<day index="10">
+				<name>Gudbjørg</name>
+				<name>Gudveig</name>
+			</day>
+			<day index="11">
+				<name>Martin</name>
+				<name>Morten</name>
+				<name>Martine</name>
+			</day>
+			<day index="12">
+				<name>Torkjell</name>
+				<name>Torkil</name>
+			</day>
+			<day index="13">
+				<name>Kirsten</name>
+				<name>Kirsti</name>
+			</day>
+			<day index="14">
+				<name>Fredrik</name>
+				<name>Fred</name>
+				<name>Freddy</name>
+			</day>
+			<day index="15">
+				<name>Oddfrid</name>
+				<name>Oddvar</name>
+			</day>
+			<day index="16">
+				<name>Edmund</name>
+				<name>Edgar</name>
+			</day>
+			<day index="17">
+				<name>Hugo</name>
+				<name>Hogne</name>
+				<name>Hauk</name>
+			</day>
+			<day index="18">
+				<name>Magne</name>
+				<name>Magny</name>
+			</day>
+			<day index="19">
+				<name>Elisabet</name>
+				<name>Lisbet</name>
+			</day>
+			<day index="20">
+				<name>Halvdan</name>
+				<name>Helle</name>
+			</day>
+			<day index="21">
+				<name>Mariann</name>
+				<name>Marianne</name>
+			</day>
+			<day index="22">
+				<name>Cecilie</name>
+				<name>Silje</name>
+				<name>Sissel</name>
+			</day>
+			<day index="23">
+				<name>Klement</name>
+				<name>Klaus</name>
+			</day>
+			<day index="24">
+				<name>Gudrun</name>
+				<name>Guro</name>
+			</day>
+			<day index="25">
+				<name>Katarina</name>
+				<name>Katrine</name>
+				<name>Kari</name>
+			</day>
+			<day index="26">
+				<name>Konrad</name>
+				<name>Kurt</name>
+			</day>
+			<day index="27">
+				<name>Torlaug</name>
+				<name>Torleif</name>
+			</day>
+			<day index="28">
+				<name>Ruben</name>
+				<name>Rut</name>
+			</day>
+			<day index="29">
+				<name>Sofie</name>
+				<name>Sonja</name>
+			</day>
+			<day index="30">
+				<name>Andreas</name>
+				<name>Anders</name>
+			</day>
+		</month>
+		<month index="12">
+			<name>Desember</name>
+			<day index="1">
+				<name>Arnold</name>
+				<name>Arnljot</name>
+				<name>Arnt</name>
+			</day>
+			<day index="2">
+				<name>Borghild</name>
+				<name>Borgny</name>
+				<name>Bård</name>
+			</day>
+			<day index="3">
+				<name>Sveinung</name>
+				<name>Svein</name>
+			</day>
+			<day index="4">
+				<name>Barbara</name>
+				<name>Barbro</name>
+			</day>
+			<day index="5">
+				<name>Stine</name>
+				<name>Ståle</name>
+			</day>
+			<day index="6">
+				<name>Nils</name>
+				<name>Nikolai</name>
+			</day>
+			<day index="7">
+				<name>Hallfrid</name>
+				<name>Hallstein</name>
+			</day>
+			<day index="8">
+				<name>Marlene</name>
+				<name>Marion</name>
+				<name>Morgan</name>
+			</day>
+			<day index="9">
+				<name>Anniken</name>
+				<name>Annette</name>
+			</day>
+			<day index="10">
+				<name>Stine</name>
+				<name>Ståle</name>
+			</day>
+			<day index="11">
+				<name>Daniel</name>
+				<name>Dan</name>
+			</day>
+			<day index="12">
+				<name>Pia</name>
+				<name>Peggy</name>
+			</day>
+			<day index="13">
+				<name>Lucia</name>
+				<name>Lydia</name>
+			</day>
+			<day index="14">
+				<name>Steinar</name>
+				<name>Stein</name>
+			</day>
+			<day index="15">
+				<name>Hilda</name>
+				<name>Hilde</name>
+			</day>
+			<day index="16">
+				<name>Oddbjørg</name>
+				<name>Oddbjørn</name>
+			</day>
+			<day index="17">
+				<name>Inga</name>
+				<name>Inge</name>
+			</day>
+			<day index="18">
+				<name>Kristoffer</name>
+				<name>Kate</name>
+			</day>
+			<day index="19">
+				<name>Iselin</name>
+				<name>Isak</name>
+			</day>
+			<day index="20">
+				<name>Abraham</name>
+				<name>Amund</name>
+			</day>
+			<day index="21">
+				<name>Tomas</name>
+				<name>Tom</name>
+				<name>Tommy</name>
+			</day>
+			<day index="22">
+				<name>Ingemar</name>
+				<name>Ingar</name>
+			</day>
+			<day index="23">
+				<name>Sigurd</name>
+				<name>Sjur</name>
+			</day>
+			<day index="24">
+				<name>Adam</name>
+				<name>Eva</name>
+			</day>
+			<day index="25"/>
+			<day index="26">
+				<name>Stefan</name>
+				<name>Steffen</name>
+			</day>
+			<day index="27">
+				<name>Narve</name>
+				<name>Natalie</name>
+			</day>
+			<day index="28">
+				<name>Unni</name>
+				<name>Une</name>
+				<name>Unn</name>
+			</day>
+			<day index="29">
+				<name>Vidar</name>
+				<name>Vemund</name>
+			</day>
+			<day index="30">
+				<name>David</name>
+				<name>Diana</name>
+				<name>Dina</name>
+			</day>
+			<day index="31">
+				<name>Sylfest</name>
+				<name>Sylvia</name>
+				<name>Sylvi</name>
+			</day>
+		</month>
+	</year>
+  <week>
+    <day index="1">
+      <name>mandag</name>
+    </day>
+    <day index="2">
+      <name>tirsdag</name>
+    </day>
+    <day index="3">
+      <name>onsdag</name>
+    </day>
+    <day index="4">
+      <name>torsdag</name>
+    </day>
+    <day index="5">
+      <name>fredag</name>
+    </day>
+    <day index="6">
+      <name>lørdag</name>
+    </day>
+    <day index="7" holiday="true">
+      <name>søndag</name>
+    </day>
+  </week>
+  <event>
+    <day xpath="/calendar/year/month[1]/day[1]" holiday="true" flag="true">
+      <name>Nyttårs&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[1]/day[21]" flag="true">
+      <name>Prinsesse Ingrid Alexandras fødsels&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[2]/day[6]" flag="true">
+      <name>Same&#xAD;folkets dag</name>
+    </day>
+    <day xpath="/calendar/year/month[2]/day[21]" flag="true">
+      <name>Kong Harald Vs fødsels&#xAD;dag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]" holiday="true" flag="true">
+      <name>Første Påske&#xAD;dag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/preceding-sibling::day[@weekday = 7][1]" holiday="true">
+      <name>Palme&#xAD;søndag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/preceding-sibling::day[@weekday = 4][1]" holiday="true">
+      <name>Skjær&#xAD;torsdag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/preceding-sibling::day[@weekday = 5][1]" holiday="true">
+      <name>Lang&#xAD;fredag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/following-sibling::day[1]" holiday="true">
+      <name>Andre påske&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[5]/day[1]" holiday="true" flag="true">
+      <name>Offentlig høy&#xAD;tids&#xAD;dag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/following::day[40]" holiday="true">
+      <name>Kristi himmel&#xAD;farts&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[5]/day[8]" flag="true">
+      <name>Fri&#xAD;gjørings&#xAD;dag 1945</name>
+    </day>
+    <day xpath="/calendar/year/month[5]/day[17]" holiday="true" flag="true">
+      <name>Grunn&#xAD;lovs&#xAD;dagen</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/following::day[50]" holiday="true" flag="true">
+      <name>Første pinse&#xAD;dag</name>
+    </day>
+    <day xpath="(/calendar/year/month/day[@month = 3 and @index &gt;= 21 or @month = 4][@moonPhase = 2])[1]/following-sibling::day[@weekday = 7][1]/following::day[51]" holiday="true">
+      <name>Andre pinse&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[6]/day[7]" flag="true">
+      <name>Unions&#xAD;opp&#xAD;løsningen 1905</name>
+    </day>
+    <day xpath="/calendar/year/month[7]/day[4]" flag="true">
+      <name>Dronning Sonjas fødsels&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[7]/day[20]" flag="true">
+      <name>Kron&#xAD;prins Haakons fødsels&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[7]/day[29]" flag="true">
+      <name>Olsok&#xAD;dagen</name>
+    </day>
+    <day xpath="/calendar/year/month[8]/day[19]" flag="true">
+      <name>Kron&#xAD;prinsesse Mette-Marits fødsels&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[24]">
+      <name>Jul&#xAD;aften</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[25]" holiday="true" flag="true">
+      <name>Første jule&#xAD;dag</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[26]" holiday="true">
+      <name>Andre jule&#xAD;dag</name>
+    </day>
+    <!-- Dagen for Stortingsvalg -->
+  </event>
+</calendar>

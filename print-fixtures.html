@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Physicalendar Print Fixture</title>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body class="print-fixture">
+    <main id="fixtureRoot" class="preview" aria-label="Print fixture"></main>
+    <script type="module">
+      import {
+        CALENDAR_SOURCES,
+        buildCalendarProject,
+        loadCalendarSource
+      } from "./src/core/calendar-engine.js";
+      import { renderPrintPages } from "./src/core/print-renderer.js";
+      import { applyLayoutTemplate, resolveLayout } from "./src/core/layout-templates.js";
+
+      const params = new URLSearchParams(window.location.search);
+      const sourceId = params.get("source") || "sweden";
+      const year = Number(params.get("year") || 2027);
+      const templateId = params.get("template") || "classic";
+      const source = CALENDAR_SOURCES.find((item) => item.id === sourceId) || CALENDAR_SOURCES[0];
+      const settings = {
+        year,
+        weekNumbering: source.id === "united-states" ? "US" : "ISO",
+        startingWeekday: source.id === "united-states" ? 7 : 1,
+        gmt: source.id === "united-states" ? -5 : 1
+      };
+      const layout = applyLayoutTemplate(resolveLayout(), templateId);
+      const project = buildCalendarProject(await loadCalendarSource(source.path), settings);
+
+      document.title = `Physicalendar ${templateId} fixture`;
+      document.querySelector("#fixtureRoot").innerHTML = renderPrintPages(project, settings, {
+        sourceLabel: source.label,
+        monthImages: {},
+        layout
+      });
+      document.documentElement.dataset.ready = "true";
+    </script>
+  </body>
+</html>
