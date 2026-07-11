@@ -517,7 +517,11 @@
             </label>
             <output id="previewZoomOutput" for="previewZoomInput">100%</output>
           </div>
-          <div id="preview" class="preview" aria-label="Calendar pages"></div>
+          <div class="preview-flip-wrapper">
+            <button id="prevPageButton" class="page-nav-button page-nav-prev" type="button" title="Previous month" aria-label="Previous month">‹</button>
+            <div id="preview" class="preview" aria-label="Calendar pages"></div>
+            <button id="nextPageButton" class="page-nav-button page-nav-next" type="button" title="Next month" aria-label="Next month">›</button>
+          </div>
         </section>
       </section>
     </main>

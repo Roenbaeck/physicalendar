@@ -1,18 +1,19 @@
 export function renderPrintPages(project, settings, options) {
   const { sourceLabel, monthImages, monthImageSettings, layout, interactive = false } = options;
-  const source = { label: sourceLabel || "Calendar" };
+  const source = { label: sourceLabel || "Calendar", id: options.sourceId || "" };
   return project.pages.map((page) => renderMonthPage(page, settings, source, monthImages, monthImageSettings || {}, layout, { interactive })).join("");
 }
 
 export function renderMonthPage(page, settings, source, monthImages, monthImageSettings, layout, options = {}) {
   const image = monthImages[page.month];
   const imageStyle = imageStyleAttribute(monthImageSettings[page.month]);
+  const weekCount = Math.max(page.weeks.length, 1);
   const weekdayHeader = [
     `<div class="week-number" title="Week numbers">#</div>`,
     ...page.weekdayLabels.map((label) => `<div class="weekday">${escapeHtml(shortenWeekday(label))}</div>`)
   ].join("");
   const weeks = page.weeks.map((week) => {
-    const days = week.days.map((day) => renderDayCell(day)).join("");
+    const days = week.days.map((day) => renderDayCell(day, source)).join("");
     return `<div class="week-number">${week.weekNumber}</div>${days}`;
   }).join("");
   const title = layout.showMonthTitle === false
@@ -20,11 +21,10 @@ export function renderMonthPage(page, settings, source, monthImages, monthImageS
     : `<header class="month-title"><h2>${escapeHtml(page.name)}</h2><span>${page.year} · ${escapeHtml(settings.weekNumbering)} · ${escapeHtml(source?.label || "")}</span></header>`;
 
   return `
-    <article class="month-page template-${escapeHtml(safeClass(layout.templateId || "classic"))}" style="${pageStyle(layout)}" aria-label="${escapeHtml(page.name)} ${page.year}">
+    <article class="month-page template-${escapeHtml(safeClass(layout.templateId || "classic"))}" style="${pageStyle(layout)}; --calendar-week-rows: ${weekCount}" aria-label="${escapeHtml(page.name)} ${page.year}">
       ${title}
-      <div class="month-image" style="aspect-ratio: ${escapeHtml(ratioToCss(layout.imageRatio))}">${image ? `<img src="${image}" alt="" style="${imageStyle}">` : "<span>Month photo</span>"}${options.interactive ? `<button class="image-add-button" type="button" data-add-image-month="${page.month}" aria-label="Add photo for ${escapeHtml(page.name)}">+</button>` : ""}</div>
+      <div class="month-image">${image ? `<img src="${image}" alt="" style="${imageStyle}">` : "<span>Month photo</span>"}${options.interactive ? `<button class="image-add-button" type="button" data-add-image-month="${page.month}" aria-label="Add photo for ${escapeHtml(page.name)}">+</button>` : ""}</div>
       <div class="calendar-grid">${weekdayHeader}${weeks}</div>
-      <footer class="page-footer">${escapeHtml(layout.infoText)}</footer>
     </article>
   `;
 }
@@ -80,6 +80,8 @@ function renderStandalonePrintCss(layout) {
       display: block;
     }
     .month-page {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
       width: ${numberCss(layout.paperWidth)}${sanitizeUnit(layout.unit)};
       min-height: ${numberCss(layout.paperHeight)}${sanitizeUnit(layout.unit)};
       margin: 0 auto;
@@ -102,8 +104,7 @@ function renderStandalonePrintCss(layout) {
       font-size: var(--calendar-title-size);
       line-height: 1;
     }
-    .month-title span,
-    .page-footer {
+    .month-title span {
       color: #68727d;
       font-size: 13px;
     }
@@ -120,15 +121,20 @@ function renderStandalonePrintCss(layout) {
       background: var(--calendar-image-bg);
       color: #68727d;
       overflow: hidden;
+      height: 100%;
+      min-height: 0;
     }
     .month-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
     .calendar-grid {
       display: grid;
       grid-template-columns: 34px repeat(7, minmax(0, 1fr));
+      grid-template-rows: auto repeat(var(--calendar-week-rows, 6), minmax(0, 1fr));
+      height: 100%;
+      min-height: 0;
       border-top: 1px solid #1e2329;
       border-left: 1px solid #1e2329;
     }
@@ -150,8 +156,9 @@ function renderStandalonePrintCss(layout) {
     }
     .day-cell {
       position: relative;
-      display: block;
-      min-height: var(--calendar-day-min-height);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
       padding: 5px;
       background: #fff;
       text-align: left;
@@ -176,11 +183,13 @@ function renderStandalonePrintCss(layout) {
     .day-names {
       display: grid;
       gap: 1px;
-      margin-top: 3px;
+      margin-top: auto;
+      justify-self: end;
+      align-self: end;
       max-height: 42px;
       overflow: hidden;
       text-align: right;
-      font-size: 9px;
+      font-size: var(--adaptive-day-name-size, 9px);
       line-height: 1.1;
       overflow-wrap: anywhere;
       hyphens: auto;
@@ -190,15 +199,20 @@ function renderStandalonePrintCss(layout) {
     }
     .markers {
       position: absolute;
-      right: 5px;
+      left: 5px;
       bottom: 4px;
       display: flex;
       gap: 4px;
       align-items: center;
     }
     .flag-marker {
-      color: var(--calendar-accent);
-      font-size: 13px;
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 16px;
+      height: 11px;
+      object-fit: cover;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
     }
     .moon-marker {
       width: 11px;
@@ -225,7 +239,7 @@ function renderStandalonePrintCss(layout) {
   `;
 }
 
-function renderDayCell(day) {
+function renderDayCell(day, source) {
   const classes = ["day-cell"];
 
   if (day.isOutsideMonth) {
@@ -265,17 +279,18 @@ function renderDayCell(day) {
   }).join("");
   const markerParts = [];
 
-  if (day.hasFlag) {
-    markerParts.push(`<span class="flag-marker" title="Flag day">◆</span>`);
-  }
-
   if (day.moonPhase !== null) {
     markerParts.push(`<span class="moon-marker phase-${day.moonPhase}" title="Moon phase ${day.moonPhase}"></span>`);
   }
 
+  const flagHtml = day.hasFlag && source?.id
+    ? `<img class="flag-marker" src="./src/assets/flags/${escapeHtml(source.id)}.svg" alt="Flag day" title="Flag day">`
+    : "";
+
   return `
     <button class="${classes.join(" ")}" type="button" data-date="${escapeHtml(day.date)}" data-weekday-iso="${escapeHtml(day.weekday)}" data-weekday-display="${escapeHtml(day.weekdayDisplay)}">
       <span class="day-number">${day.dayNumber}</span>
+      ${flagHtml}
       <span class="day-names">${visibleNames}</span>
       <span class="markers">${markerParts.join("")}</span>
     </button>
@@ -283,9 +298,10 @@ function renderDayCell(day) {
 }
 
 export function pageStyle(layout) {
+  const width = Number(layout.paperWidth) || 210;
+  const height = Number(layout.paperHeight) || 297;
   return [
-    `aspect-ratio: ${numberCss(layout.paperWidth)} / ${numberCss(layout.paperHeight)}`,
-    `padding: ${previewPadding(layout)}`,
+    `aspect-ratio: ${width} / ${height}`,
     layoutVariables(layout)
   ].join("; ");
 }
@@ -297,21 +313,16 @@ export function ratioToCss(value) {
 
 function imageStyleAttribute(settings = {}) {
   const fit = ["cover", "contain", "fill"].includes(settings.fit) ? settings.fit : "cover";
+
+  if (fit === "contain") {
+    return escapeHtml("object-fit: contain; object-position: 50% 50%; transform: none;");
+  }
+
   const positionX = percentCss(settings.positionX, 50);
   const positionY = percentCss(settings.positionY, 50);
   const scale = percentCss(settings.scale, 100, 100, 250) / 100;
 
   return escapeHtml(`object-fit: ${fit}; object-position: ${positionX}% ${positionY}%; transform: scale(${scale}); transform-origin: ${positionX}% ${positionY}%;`);
-}
-
-function previewPadding(layout) {
-  const width = Math.max(Number(layout.paperWidth) || 210, 1);
-  const scale = 100 / width;
-  const top = Math.max(8, layout.marginTop * scale);
-  const right = Math.max(8, layout.marginRight * scale);
-  const bottom = Math.max(8, layout.marginBottom * scale);
-  const left = Math.max(8, layout.marginLeft * scale);
-  return `${top.toFixed(1)}px ${right.toFixed(1)}px ${bottom.toFixed(1)}px ${left.toFixed(1)}px`;
 }
 
 function layoutVariables(layout) {

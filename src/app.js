@@ -66,6 +66,8 @@ const elements = {
   quickImageInput: document.querySelector("#quickImageInput"),
   simpleAdvancedButton: document.querySelector("#simpleAdvancedButton"),
   simplePrintButton: document.querySelector("#simplePrintButton"),
+  prevPageButton: document.querySelector("#prevPageButton"),
+  nextPageButton: document.querySelector("#nextPageButton"),
   advancedCloseButton: document.querySelector("#advancedCloseButton"),
   sourceSelect: document.querySelector("#sourceSelect"),
   yearInput: document.querySelector("#yearInput"),
@@ -220,6 +222,8 @@ function bindEvents() {
   elements.quickImageInput.addEventListener("change", addQuickMonthImage);
   elements.simpleAdvancedButton.addEventListener("click", () => setAppView("advanced"));
   elements.advancedCloseButton.addEventListener("click", () => setAppView("simple"));
+  elements.prevPageButton.addEventListener("click", () => flipPage(-1));
+  elements.nextPageButton.addEventListener("click", () => flipPage(1));
   elements.simplePrintButton.addEventListener("click", openPrintRoute);
   elements.sourceImport.addEventListener("change", importSourceXml);
   elements.icsImport.addEventListener("change", importIcs);
@@ -437,9 +441,9 @@ function setAppView(view) {
 function applyPaperPreset() {
   const preset = elements.simplePaperPresetInput.value;
   const presets = {
-    a4: { unit: "mm", paperWidth: 210, paperHeight: 297 },
-    a3: { unit: "mm", paperWidth: 297, paperHeight: 420 },
-    letter: { unit: "in", paperWidth: 8.5, paperHeight: 11 }
+    a4: { unit: "mm", paperWidth: 210, paperHeight: 297, marginTop: 8, marginRight: 5, marginBottom: 4, marginLeft: 5 },
+    a3: { unit: "mm", paperWidth: 297, paperHeight: 420, marginTop: 10, marginRight: 7, marginBottom: 5, marginLeft: 7 },
+    letter: { unit: "in", paperWidth: 8.5, paperHeight: 11, marginTop: 0.3, marginRight: 0.2, marginBottom: 0.15, marginLeft: 0.2 }
   };
 
   if (!presets[preset]) {
@@ -588,17 +592,19 @@ function ruleInputs() {
 }
 
 function renderPreview(project, settings) {
-  applyPreviewZoom();
   const page = project.pages.find((item) => item.month === state.previewMonth) || project.pages[0];
   const previewProject = { ...project, pages: page ? [page] : [] };
 
   elements.preview.innerHTML = renderPrintPages(previewProject, settings, {
     sourceLabel: state.sourceLabel,
+    sourceId: sourceIdFromPath(elements.sourceSelect.value),
     monthImages: state.monthImages,
     monthImageSettings: state.monthImageSettings,
     layout: resolveLayout(state.layout),
     interactive: true
   });
+
+  applyPreviewZoom();
 
   for (const dayCell of elements.preview.querySelectorAll("[data-date]")) {
     dayCell.addEventListener("click", () => {
@@ -613,6 +619,137 @@ function renderPreview(project, settings) {
       elements.quickImageInput.click();
     });
   }
+
+  bindPreviewImagePan();
+  fitDayNameTypography();
+}
+
+function fitDayNameTypography() {
+  requestAnimationFrame(() => {
+    for (const page of elements.preview.querySelectorAll(".month-page")) {
+      const labels = Array.from(page.querySelectorAll(".day-names")).filter((label) => {
+        return label.textContent && label.textContent.trim().length > 0;
+      });
+
+      if (!labels.length) {
+        continue;
+      }
+
+      let low = 6;
+      let high = 10;
+      let best = 6;
+
+      for (let i = 0; i < 10; i += 1) {
+        const mid = (low + high) / 2;
+        page.style.setProperty("--adaptive-day-name-size", `${mid}px`);
+
+        const overflow = labels.some((label) => {
+          return label.scrollHeight > label.clientHeight + 0.5 || label.scrollWidth > label.clientWidth + 0.5;
+        });
+
+        if (overflow) {
+          high = mid;
+        } else {
+          best = mid;
+          low = mid;
+        }
+      }
+
+      page.style.setProperty("--adaptive-day-name-size", `${best.toFixed(2)}px`);
+    }
+  });
+}
+
+function bindPreviewImagePan() {
+  const month = String(state.previewMonth);
+  const container = elements.preview.querySelector(".month-image");
+  const image = container?.querySelector("img");
+
+  if (!container || !image) {
+    return;
+  }
+
+  image.style.cursor = "grab";
+  image.draggable = false;
+  container.style.touchAction = "none";
+
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let startPosX = 50;
+  let startPosY = 50;
+
+  const onMove = (event) => {
+    if (!dragging) {
+      return;
+    }
+
+    const width = Math.max(container.clientWidth, 1);
+    const height = Math.max(container.clientHeight, 1);
+    const deltaX = ((event.clientX - startX) / width) * 100;
+    const deltaY = ((event.clientY - startY) / height) * 100;
+    const nextX = clampPercent(startPosX - deltaX);
+    const nextY = clampPercent(startPosY - deltaY);
+    const settings = imageSettingsFor(month);
+
+    settings.positionX = nextX;
+    settings.positionY = nextY;
+    state.monthImageSettings[month] = settings;
+    image.style.objectPosition = `${nextX}% ${nextY}%`;
+  };
+
+  const onUp = () => {
+    if (!dragging) {
+      return;
+    }
+
+    dragging = false;
+    image.style.cursor = "grab";
+    storeImageSettings(state.monthImageSettings);
+
+    const xInput = elements.imageInputs.querySelector(`[data-image-x="${month}"]`);
+    const yInput = elements.imageInputs.querySelector(`[data-image-y="${month}"]`);
+    const settings = imageSettingsFor(month);
+
+    if (xInput) {
+      xInput.value = String(Math.round(settings.positionX));
+    }
+
+    if (yInput) {
+      yInput.value = String(Math.round(settings.positionY));
+    }
+  };
+
+  container.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) {
+      return;
+    }
+
+    event.preventDefault();
+    const settings = imageSettingsFor(month);
+
+    if (settings.fit !== "cover") {
+      settings.fit = "cover";
+      image.style.objectFit = "cover";
+    }
+
+    dragging = true;
+    startX = event.clientX;
+    startY = event.clientY;
+    startPosX = Number(settings.positionX) || 50;
+    startPosY = Number(settings.positionY) || 50;
+    image.style.cursor = "grabbing";
+    container.setPointerCapture(event.pointerId);
+  });
+
+  container.addEventListener("pointermove", onMove);
+  container.addEventListener("pointerup", (event) => {
+    onUp();
+    if (container.hasPointerCapture(event.pointerId)) {
+      container.releasePointerCapture(event.pointerId);
+    }
+  });
+  container.addEventListener("pointercancel", onUp);
 }
 
 function renderMonthPicker(project) {
@@ -626,6 +763,43 @@ function renderMonthPicker(project) {
     return `<option value="${page.month}">${escapeHtml(page.name)}</option>`;
   }).join("");
   elements.previewMonthInput.value = String(state.previewMonth);
+  updatePageNavButtons();
+}
+
+function updatePageNavButtons() {
+  const pages = state.project?.pages || [];
+  const idx = pages.findIndex((p) => p.month === state.previewMonth);
+  elements.prevPageButton.disabled = idx <= 0;
+  elements.nextPageButton.disabled = idx < 0 || idx >= pages.length - 1;
+}
+
+let _flipLock = false;
+
+function flipPage(direction) {
+  const pages = state.project?.pages || [];
+  const idx = pages.findIndex((p) => p.month === state.previewMonth);
+  const next = idx + direction;
+  if (next < 0 || next >= pages.length || _flipLock) return;
+
+  _flipLock = true;
+  const exitClass = direction > 0 ? "flip-exit-left" : "flip-exit-right";
+  const enterClass = direction > 0 ? "flip-enter-right" : "flip-enter-left";
+
+  elements.preview.classList.add(exitClass);
+
+  setTimeout(() => {
+    elements.preview.classList.remove(exitClass);
+    state.previewMonth = pages[next].month;
+    elements.previewMonthInput.value = String(state.previewMonth);
+    renderPreview(state.project, readSettings());
+    updatePageNavButtons();
+    elements.preview.classList.add(enterClass);
+
+    setTimeout(() => {
+      elements.preview.classList.remove(enterClass);
+      _flipLock = false;
+    }, 400);
+  }, 360);
 }
 
 function updatePreviewZoom() {
@@ -646,7 +820,7 @@ function writePreviewZoom(value) {
 function applyPreviewZoom() {
   const zoom = clampPreviewZoom(state.previewZoom);
 
-  elements.preview.style.setProperty("--preview-page-width", `${Math.round(620 * zoom / 100)}px`);
+  elements.preview.style.setProperty("--preview-zoom", zoom / 100);
 }
 
 function setupCollapsiblePanels() {
@@ -1409,7 +1583,10 @@ async function setMonthImage(month, file) {
 
   state.monthImages[month] = image.dataUrl;
   state.monthImageSettings[month] = {
-    ...imageSettingsFor(month),
+    fit: "cover",
+    positionX: 50,
+    positionY: 50,
+    scale: 100,
     name: file.name,
     meta: {
       width: image.width,
@@ -1456,6 +1633,10 @@ function imageSettingsFor(month) {
     scale: 100,
     ...(state.monthImageSettings[month] || {})
   };
+}
+
+function clampPercent(value) {
+  return Math.max(0, Math.min(100, Number(value) || 0));
 }
 
 function findDay(project, date) {
@@ -2019,7 +2200,15 @@ function defaultLayout() {
 
 function loadStoredLayout() {
   try {
-    return resolveLayout(JSON.parse(localStorage.getItem("physicalendar.layout") || "{}"));
+    const stored = JSON.parse(localStorage.getItem("physicalendar.layout") || "{}");
+    // Migrate old default margins to new smaller defaults
+    if (stored.unit === "mm" || !stored.unit) {
+      if (stored.marginTop === 15) stored.marginTop = 8;
+      if (stored.marginRight === 10) stored.marginRight = 5;
+      if (stored.marginBottom === 8) stored.marginBottom = 4;
+      if (stored.marginLeft === 10) stored.marginLeft = 5;
+    }
+    return resolveLayout(stored);
   } catch {
     return defaultLayout();
   }
@@ -2167,6 +2356,11 @@ function readImageFile(file) {
 
 function stripSoftHyphens(value) {
   return value.replace(/\u00ad/g, "");
+}
+
+function sourceIdFromPath(path) {
+  const match = CALENDAR_SOURCES.find((s) => s.path === path);
+  return match ? match.id : "";
 }
 
 function escapeHtml(value) {

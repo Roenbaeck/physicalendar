@@ -1,17 +1,19 @@
 :root {
   color-scheme: light;
-  --ink: #1c2630;
-  --muted: #64717d;
-  --line: #d8dcd8;
+  --ink: #1a2332;
+  --muted: #5e6e7d;
+  --line: #dfe3e0;
   --paper: #fffefa;
   --surface: #edf0ec;
-  --accent: #126d7e;
+  --accent: #0e7a8c;
   --holiday: #bd4338;
   --flag: #176aa4;
-  --rail: #1b5c8f;
-  --rail-control: #f8fbfb;
+  --rail: #14405e;
+  --rail-deep: #0d2e44;
+  --rail-control: #f5f8fa;
   --rail-ink: #16344a;
-  --warm: #c7634d;
+  --warm: #d2604a;
+  --warm-hover: #b8503d;
 }
 
 * {
@@ -21,8 +23,10 @@
 body {
   margin: 0;
   color: var(--ink);
-  background: var(--surface);
+  background: #dee2db;
   font: 14px/1.45 "Avenir Next", Avenir, "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .test-shell {
@@ -88,25 +92,28 @@ select {
 }
 
 .app-shell[data-view="simple"] {
-  display: grid;
-  grid-template-columns: 298px minmax(0, 1fr);
-  background: #e8ebe7;
+  display: block;
+  background: #dee2db;
 }
 
 .simple-rail {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: 18px;
-  min-height: 100vh;
+  width: 280px;
+  height: 100vh;
   padding: 38px 28px 26px;
-  background: var(--rail);
+  background: linear-gradient(175deg, var(--rail) 0%, var(--rail-deep) 100%);
   color: #fff;
-  box-shadow: 14px 0 30px rgba(25, 53, 72, 0.14);
-  border-radius: 0 42px 42px 0;
-  overflow: hidden;
+  box-shadow: 14px 0 40px rgba(13, 46, 68, 0.22);
+  border-radius: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10;
 }
 
 .simple-brand {
@@ -125,17 +132,17 @@ select {
 
 .brand-mark {
   display: grid;
-  flex: 0 0 30px;
-  width: 30px;
-  height: 30px;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 11px 11px 11px 4px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
   color: #fff;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 20px;
   font-weight: 700;
-  transform: rotate(-8deg);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .simple-brand strong {
@@ -143,24 +150,27 @@ select {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 750;
-  letter-spacing: 0;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .simple-brand span {
-  font-size: 13px;
-  opacity: 0.78;
+  font-size: 12px;
+  opacity: 0.55;
+  letter-spacing: 0.04em;
 }
 
 .simple-rail label {
   width: 100%;
   min-width: 0;
   gap: 6px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 12px;
-  font-weight: 650;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .simple-rail select,
@@ -168,22 +178,34 @@ select {
   width: 100%;
   min-width: 0;
   height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.48);
-  border-radius: 6px;
-  background: var(--rail-control);
-  color: var(--rail-ink);
-  font-size: 16px;
-  font-weight: 650;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
   text-align: left;
-  box-shadow: 0 7px 12px rgba(12, 43, 67, 0.12);
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
 }
 
 .simple-rail select:hover,
 .simple-rail input:hover {
-  border-color: #fff;
-  box-shadow: 0 9px 16px rgba(12, 43, 67, 0.18);
-  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.simple-rail select:focus,
+.simple-rail input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.16);
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+  outline-offset: 2px;
+}
+
+.simple-rail select option {
+  background: var(--rail);
+  color: #fff;
 }
 
 .simple-actions {
@@ -193,26 +215,28 @@ select {
 }
 
 .simple-action {
-  min-height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 6px;
-  background: #fffefa;
-  color: var(--rail-ink);
-  font: 700 14px/1 "Avenir Next", Avenir, "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  min-height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font: 650 14px/1 "Avenir Next", Avenir, "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .simple-action.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.66);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .simple-action.primary {
   background: var(--warm);
-  border-color: var(--warm);
+  border-color: transparent;
   color: #fff;
+  box-shadow: 0 4px 14px rgba(210, 96, 74, 0.35);
 }
 
 .simple-action:hover {
@@ -220,12 +244,17 @@ select {
 }
 
 .simple-action.secondary:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .simple-action.primary:hover {
-  background: #ad503f;
-  border-color: #ad503f;
+  background: var(--warm-hover);
+  box-shadow: 0 6px 20px rgba(210, 96, 74, 0.45);
+}
+
+.simple-action:active {
+  transform: translateY(0);
 }
 
 .app-shell[data-view="simple"] .toolbar,
@@ -236,13 +265,14 @@ select {
 .app-shell[data-view="simple"] .workspace {
   display: block;
   min-height: 100vh;
+  margin-left: 280px;
 }
 
 .app-shell[data-view="simple"] .preview-stage {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background: #e8ebe7;
+  background: #dee2db;
 }
 
 .app-shell[data-view="simple"] .preview-toolbar {
@@ -250,23 +280,117 @@ select {
   justify-content: space-between;
   width: min(660px, calc(100% - 72px));
   margin: 24px auto 0;
-  padding: 9px 14px 9px 18px;
-  border: 1px solid rgba(159, 173, 169, 0.62);
+  padding: 9px 18px;
+  border: 1px solid rgba(159, 173, 169, 0.35);
   border-radius: 999px;
-  background: rgba(255, 254, 250, 0.78);
-  box-shadow: 0 6px 18px rgba(28, 38, 48, 0.08);
+  background: rgba(255, 254, 250, 0.7);
+  box-shadow: 0 4px 16px rgba(28, 38, 48, 0.06);
+  backdrop-filter: blur(12px);
 }
 
 .app-shell[data-view="simple"] .preview {
-  align-content: center;
-  min-height: 0;
+  display: flex;
+  justify-content: center;
   padding: 20px 36px 42px;
 }
 
 .app-shell[data-view="simple"] .month-page {
+  width: 620px;
   box-shadow: 0 18px 38px rgba(28, 38, 48, 0.18), 0 3px 9px rgba(28, 38, 48, 0.08);
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 0;
+}
+
+/* ── Page flip wrapper & navigation ── */
+
+.preview-flip-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: start;
+  flex: 1;
+}
+
+.page-nav-button {
+  position: sticky;
+  top: 50vh;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin: 0 auto;
+  border: 1px solid rgba(159, 173, 169, 0.42);
+  border-radius: 50%;
+  background: rgba(255, 254, 250, 0.88);
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(28, 38, 48, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, opacity 180ms ease;
+  opacity: 0.72;
+}
+
+.page-nav-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 14px rgba(28, 38, 48, 0.14);
+  background: #fff;
+  opacity: 1;
+}
+
+.page-nav-button:active {
+  transform: scale(0.95);
+}
+
+.page-nav-button:disabled {
+  opacity: 0.25;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Page flip animation */
+
+.preview .month-page {
+  transition: transform 420ms cubic-bezier(0.4, 0, 0.2, 1), opacity 420ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+.preview.flip-exit-left .month-page {
+  animation: flipOutLeft 360ms cubic-bezier(0.4, 0, 0.8, 0.2) forwards;
+}
+
+.preview.flip-exit-right .month-page {
+  animation: flipOutRight 360ms cubic-bezier(0.4, 0, 0.8, 0.2) forwards;
+}
+
+.preview.flip-enter-left .month-page {
+  animation: flipInLeft 400ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+.preview.flip-enter-right .month-page {
+  animation: flipInRight 400ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes flipOutLeft {
+  0%   { transform: perspective(1200px) rotateY(0deg);   opacity: 1; }
+  100% { transform: perspective(1200px) rotateY(-90deg);  opacity: 0; }
+}
+
+@keyframes flipOutRight {
+  0%   { transform: perspective(1200px) rotateY(0deg);   opacity: 1; }
+  100% { transform: perspective(1200px) rotateY(90deg);   opacity: 0; }
+}
+
+@keyframes flipInLeft {
+  0%   { transform: perspective(1200px) rotateY(90deg);   opacity: 0; }
+  100% { transform: perspective(1200px) rotateY(0deg);    opacity: 1; }
+}
+
+@keyframes flipInRight {
+  0%   { transform: perspective(1200px) rotateY(-90deg);  opacity: 0; }
+  100% { transform: perspective(1200px) rotateY(0deg);    opacity: 1; }
 }
 
 .app-shell[data-view="advanced"] .simple-rail {
@@ -1063,23 +1187,29 @@ input[type="file"] {
 
 .preview {
   --preview-page-width: 620px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--preview-page-width)), var(--preview-page-width)));
+  display: flex;
+  flex-wrap: wrap;
   gap: 26px;
   justify-content: center;
   align-items: start;
   padding: 22px;
 }
 
+.preview .month-page {
+  zoom: var(--preview-zoom, 1);
+}
+
 .month-page {
-  aspect-ratio: 210 / 297;
-  max-width: var(--preview-page-width);
-  width: min(100%, var(--preview-page-width));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+  width: var(--preview-page-width);
+  max-width: 100%;
   margin: 0 auto;
-  padding: 28px 24px 22px;
+  padding: 3% 2.5%;
   border: 1px solid #d9ddd8;
   background: var(--paper);
   box-shadow: 0 14px 35px rgba(28, 38, 48, 0.14);
+  overflow: hidden;
 }
 
 .month-title {
@@ -1119,12 +1249,14 @@ input[type="file"] {
   color: var(--muted);
   overflow: hidden;
   border-radius: 8px;
+  height: 100%;
+  min-height: 0;
 }
 
 .month-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .image-add-button {
@@ -1148,6 +1280,9 @@ input[type="file"] {
 .calendar-grid {
   display: grid;
   grid-template-columns: 34px repeat(7, minmax(0, 1fr));
+  grid-template-rows: auto repeat(var(--calendar-week-rows, 6), minmax(0, 1fr));
+  height: 100%;
+  min-height: 0;
   border-top: 1px solid #8c9695;
   border-left: 1px solid #8c9695;
   border-radius: 8px 8px 0 0;
@@ -1174,8 +1309,9 @@ input[type="file"] {
 
 .day-cell {
   position: relative;
-  display: block;
-  min-height: var(--calendar-day-min-height, 72px);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   padding: 5px;
   background: #fffefa;
   cursor: pointer;
@@ -1201,11 +1337,13 @@ input[type="file"] {
 .day-names {
   display: grid;
   gap: 1px;
-  margin-top: 3px;
+  margin-top: auto;
+  justify-self: end;
+  align-self: end;
   max-height: 42px;
   overflow: hidden;
   text-align: right;
-  font-size: 9px;
+  font-size: var(--adaptive-day-name-size, 9px);
   line-height: 1.1;
   overflow-wrap: anywhere;
   hyphens: auto;
@@ -1217,7 +1355,7 @@ input[type="file"] {
 
 .markers {
   position: absolute;
-  right: 5px;
+  left: 5px;
   bottom: 4px;
   display: flex;
   gap: 4px;
@@ -1225,8 +1363,13 @@ input[type="file"] {
 }
 
 .flag-marker {
-  color: var(--calendar-accent, var(--flag));
-  font-size: 13px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 11px;
+  object-fit: cover;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
 }
 
 .moon-marker {
@@ -1249,13 +1392,6 @@ input[type="file"] {
   background: linear-gradient(90deg, #fff 50%, var(--ink) 50%);
 }
 
-.page-footer {
-  margin-top: 10px;
-  color: var(--muted);
-  text-align: right;
-  font-size: 11px;
-}
-
 .error {
   max-width: 760px;
   margin: 22px;
@@ -1266,17 +1402,34 @@ input[type="file"] {
   color: #8d1b1b;
 }
 
+/* Hide page-nav buttons in advanced view and print */
+.app-shell[data-view="advanced"] .page-nav-button {
+  display: none;
+}
+
+.app-shell[data-view="advanced"] .preview-flip-wrapper {
+  display: block;
+}
+
 @media (max-width: 920px) {
   .app-shell[data-view="simple"] {
     display: block;
+  }
+
+  .app-shell[data-view="simple"] .workspace {
+    margin-left: 0;
   }
 
   .simple-rail {
     position: static;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
+    width: auto;
+    height: auto;
     min-height: 0;
     padding: 22px 18px;
+    border-radius: 0;
+    overflow: visible;
   }
 
   .simple-brand,
@@ -1344,7 +1497,8 @@ input[type="file"] {
   .toolbar,
   .side-panel,
   .simple-rail,
-  .image-add-button {
+  .image-add-button,
+  .page-nav-button {
     display: none;
   }
 
