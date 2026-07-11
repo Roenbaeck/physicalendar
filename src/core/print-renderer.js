@@ -23,7 +23,7 @@ export function renderMonthPage(page, settings, source, monthImages, monthImageS
   return `
     <article class="month-page template-${escapeHtml(safeClass(layout.templateId || "classic"))}" style="${pageStyle(layout)}; --calendar-week-rows: ${weekCount}" aria-label="${escapeHtml(page.name)} ${page.year}">
       ${title}
-      <div class="month-image">${image ? `<img src="${image}" alt="" style="${imageStyle}">` : "<span>Month photo</span>"}${options.interactive ? `<button class="image-add-button" type="button" data-add-image-month="${page.month}" aria-label="Add photo for ${escapeHtml(page.name)}">+</button>` : ""}</div>
+      <div class="month-image" data-image-month="${page.month}">${image ? `<img src="${image}" alt="" style="${imageStyle}">` : "<span>Month photo</span>"}${options.interactive ? `<button class="image-add-button" type="button" data-add-image-month="${page.month}" aria-label="Add photo for ${escapeHtml(page.name)}">+</button>` : ""}</div>
       <div class="calendar-grid">${weekdayHeader}${weeks}</div>
     </article>
   `;

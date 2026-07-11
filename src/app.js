@@ -620,8 +620,71 @@ function renderPreview(project, settings) {
     });
   }
 
+  layoutPreviewImages();
   bindPreviewImagePan();
   fitDayNameTypography();
+}
+
+function layoutPreviewImages() {
+  for (const container of elements.preview.querySelectorAll(".month-image[data-image-month]")) {
+    const month = container.dataset.imageMonth;
+    const image = container.querySelector("img");
+
+    if (!month || !image) {
+      continue;
+    }
+
+    applyPreviewImageLayout(container, image, month);
+  }
+}
+
+function applyPreviewImageLayout(container, image, month) {
+  const settings = imageSettingsFor(month);
+  const meta = settings.meta || {};
+  const sourceWidth = Number(meta.width);
+  const sourceHeight = Number(meta.height);
+
+  if (!sourceWidth || !sourceHeight) {
+    return;
+  }
+
+  const containerWidth = Math.max(container.clientWidth, 1);
+  const containerHeight = Math.max(container.clientHeight, 1);
+  const fit = ["cover", "contain", "fill"].includes(settings.fit) ? settings.fit : "cover";
+  const scale = Math.max(Number(settings.scale) || 100, 1) / 100;
+  let renderWidth = containerWidth;
+  let renderHeight = containerHeight;
+
+  if (fit === "fill") {
+    renderWidth = containerWidth * scale;
+    renderHeight = containerHeight * scale;
+  } else {
+    const baseScale = fit === "contain"
+      ? Math.min(containerWidth / sourceWidth, containerHeight / sourceHeight)
+      : Math.max(containerWidth / sourceWidth, containerHeight / sourceHeight);
+
+    renderWidth = sourceWidth * baseScale * scale;
+    renderHeight = sourceHeight * baseScale * scale;
+  }
+
+  const overflowX = Math.max(0, renderWidth - containerWidth);
+  const overflowY = Math.max(0, renderHeight - containerHeight);
+  const positionX = clampPercent(settings.positionX);
+  const positionY = clampPercent(settings.positionY);
+  const left = -overflowX * (positionX / 100);
+  const top = -overflowY * (positionY / 100);
+
+  image.style.position = "absolute";
+  image.style.left = `${left}px`;
+  image.style.top = `${top}px`;
+  image.style.width = `${renderWidth}px`;
+  image.style.height = `${renderHeight}px`;
+  image.style.maxWidth = "none";
+  image.style.maxHeight = "none";
+  image.style.objectFit = "fill";
+  image.style.objectPosition = "50% 50%";
+  image.style.transform = "none";
+  image.style.transformOrigin = "50% 50%";
 }
 
 function fitDayNameTypography() {
@@ -679,32 +742,18 @@ function bindPreviewImagePan() {
   let startPosX = 50;
   let startPosY = 50;
 
-  const onMove = (event) => {
-    if (!dragging) {
-      return;
-    }
-
-    const width = Math.max(container.clientWidth, 1);
-    const height = Math.max(container.clientHeight, 1);
-    const deltaX = ((event.clientX - startX) / width) * 100;
-    const deltaY = ((event.clientY - startY) / height) * 100;
-    const nextX = clampPercent(startPosX - deltaX);
-    const nextY = clampPercent(startPosY - deltaY);
-    const settings = imageSettingsFor(month);
-
-    settings.positionX = nextX;
-    settings.positionY = nextY;
-    state.monthImageSettings[month] = settings;
-    image.style.objectPosition = `${nextX}% ${nextY}%`;
-  };
-
-  const onUp = () => {
+  const endDrag = () => {
     if (!dragging) {
       return;
     }
 
     dragging = false;
     image.style.cursor = "grab";
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchend", onTouchEnd);
+    window.removeEventListener("touchcancel", onTouchEnd);
     storeImageSettings(state.monthImageSettings);
 
     const xInput = elements.imageInputs.querySelector(`[data-image-x="${month}"]`);
@@ -720,36 +769,96 @@ function bindPreviewImagePan() {
     }
   };
 
-  container.addEventListener("pointerdown", (event) => {
+  const applyDragPosition = (clientX, clientY) => {
+    if (!dragging) {
+      return;
+    }
+
+    const width = Math.max(container.clientWidth, 1);
+    const height = Math.max(container.clientHeight, 1);
+    const deltaX = ((clientX - startX) / width) * 100;
+    const deltaY = ((clientY - startY) / height) * 100;
+    const nextX = clampPercent(startPosX - deltaX);
+    const nextY = clampPercent(startPosY - deltaY);
+    const settings = imageSettingsFor(month);
+
+    settings.positionX = nextX;
+    settings.positionY = nextY;
+    state.monthImageSettings[month] = settings;
+    applyPreviewImageLayout(container, image, month);
+  };
+
+  const beginDrag = (clientX, clientY) => {
+    const settings = imageSettingsFor(month);
+
+    if (settings.fit !== "cover") {
+      settings.fit = "cover";
+    }
+
+    state.monthImageSettings[month] = settings;
+    applyPreviewImageLayout(container, image, month);
+
+    dragging = true;
+    startX = clientX;
+    startY = clientY;
+    startPosX = Number(settings.positionX) || 50;
+    startPosY = Number(settings.positionY) || 50;
+    image.style.cursor = "grabbing";
+  };
+
+  const onMouseMove = (event) => {
+    applyDragPosition(event.clientX, event.clientY);
+  };
+
+  const onMouseUp = () => {
+    endDrag();
+  };
+
+  const onTouchMove = (event) => {
+    const touch = event.touches?.[0];
+
+    if (!touch) {
+      return;
+    }
+
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
+    applyDragPosition(touch.clientX, touch.clientY);
+  };
+
+  const onTouchEnd = () => {
+    endDrag();
+  };
+
+  container.addEventListener("mousedown", (event) => {
     if (event.button !== 0) {
       return;
     }
 
     event.preventDefault();
-    const settings = imageSettingsFor(month);
-
-    if (settings.fit !== "cover") {
-      settings.fit = "cover";
-      image.style.objectFit = "cover";
-    }
-
-    dragging = true;
-    startX = event.clientX;
-    startY = event.clientY;
-    startPosX = Number(settings.positionX) || 50;
-    startPosY = Number(settings.positionY) || 50;
-    image.style.cursor = "grabbing";
-    container.setPointerCapture(event.pointerId);
+    beginDrag(event.clientX, event.clientY);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
   });
 
-  container.addEventListener("pointermove", onMove);
-  container.addEventListener("pointerup", (event) => {
-    onUp();
-    if (container.hasPointerCapture(event.pointerId)) {
-      container.releasePointerCapture(event.pointerId);
+  container.addEventListener("touchstart", (event) => {
+    const touch = event.touches?.[0];
+
+    if (!touch) {
+      return;
     }
-  });
-  container.addEventListener("pointercancel", onUp);
+
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
+    beginDrag(touch.clientX, touch.clientY);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+    window.addEventListener("touchcancel", onTouchEnd);
+  }, { passive: false });
 }
 
 function renderMonthPicker(project) {
