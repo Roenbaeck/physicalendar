@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<calendar locale="nl-NL">
+  <year>
+    <month index="1">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+    <month index="2">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29" leap="1"/>
+    </month>
+    <month index="3">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+    <month index="4">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+    </month>
+    <month index="5">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+    <month index="6">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+    </month>
+    <month index="7">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+    <month index="8">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+    <month index="9">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+    </month>
+    <month index="10">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+    <month index="11">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+    </month>
+    <month index="12">
+      <day index="1"/>
+      <day index="2"/>
+      <day index="3"/>
+      <day index="4"/>
+      <day index="5"/>
+      <day index="6"/>
+      <day index="7"/>
+      <day index="8"/>
+      <day index="9"/>
+      <day index="10"/>
+      <day index="11"/>
+      <day index="12"/>
+      <day index="13"/>
+      <day index="14"/>
+      <day index="15"/>
+      <day index="16"/>
+      <day index="17"/>
+      <day index="18"/>
+      <day index="19"/>
+      <day index="20"/>
+      <day index="21"/>
+      <day index="22"/>
+      <day index="23"/>
+      <day index="24"/>
+      <day index="25"/>
+      <day index="26"/>
+      <day index="27"/>
+      <day index="28"/>
+      <day index="29"/>
+      <day index="30"/>
+      <day index="31"/>
+    </month>
+  </year>
+  <week>
+    <day index="1">
+      <name>maandag</name>
+    </day>
+    <day index="2">
+      <name>dinsdag</name>
+    </day>
+    <day index="3">
+      <name>woensdag</name>
+    </day>
+    <day index="4">
+      <name>donderdag</name>
+    </day>
+    <day index="5">
+      <name>vrijdag</name>
+    </day>
+    <day index="6">
+      <name>zaterdag</name>
+    </day>
+    <day index="7" holiday="true">
+      <name>zondag</name>
+    </day>
+  </week>
+  <event>
+    <day xpath="/calendar/year/month[1]/day[1]" holiday="true" flag="true">
+      <name>Nieuwjaarsdag</name>
+    </day>
+    <day xpath="/calendar/year/month/day[@easter = 'true']/preceding::day[@weekday = 5][1]" flag="true">
+      <name>Goede Vrijdag</name>
+    </day>
+    <day xpath="/calendar/year/month/day[@easter = 'true']" holiday="true" flag="true">
+      <name>Eerste Paasdag</name>
+    </day>
+    <day xpath="/calendar/year/month/day[@easter = 'true']/following::day[1]" holiday="true" flag="true">
+      <name>Tweede Paasdag</name>
+    </day>
+    <day xpath="/calendar/year/month[4]/day[27]" holiday="true" flag="true">
+      <name>Koningsdag</name>
+    </day>
+    <day xpath="/calendar/year/month[4]/day[27][@weekday = 7]/preceding-sibling::day[1]" holiday="true" flag="true">
+      <name>Koningsdag</name>
+    </day>
+    <day xpath="/calendar/year/month[5]/day[4]" flag="true">
+      <name>Dodenherdenking</name>
+    </day>
+    <day xpath="/calendar/year/month[5]/day[5]" holiday="true" flag="true">
+      <name>Bevrijdingsdag</name>
+    </day>
+    <day xpath="/calendar/year/month/day[@easter = 'true']/following::day[39]" holiday="true" flag="true">
+      <name>Hemelvaartsdag</name>
+    </day>
+    <day xpath="/calendar/year/month/day[@easter = 'true']/following::day[49]" holiday="true" flag="true">
+      <name>Eerste Pinksterdag</name>
+    </day>
+    <day xpath="/calendar/year/month/day[@easter = 'true']/following::day[50]" holiday="true" flag="true">
+      <name>Tweede Pinksterdag</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[5]" flag="true">
+      <name>Sinterklaasavond</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[25]" holiday="true" flag="true">
+      <name>Eerste Kerstdag</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[26]" holiday="true" flag="true">
+      <name>Tweede Kerstdag</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[31]" flag="true">
+      <name>Oudejaarsavond</name>
+    </day>
+  </event>
+</calendar>

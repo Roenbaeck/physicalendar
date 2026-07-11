@@ -6,6 +6,7 @@ export const CALENDAR_SOURCES = [
   { id: "norway", label: "Norway", path: "./src/data/calendars/norway.xml", locale: "nb-NO" },
   { id: "denmark", label: "Denmark", path: "./src/data/calendars/denmark.xml", locale: "da-DK" },
   { id: "finland", label: "Finland", path: "./src/data/calendars/finland.xml", locale: "fi-FI" },
+  { id: "netherlands", label: "Netherlands", path: "./src/data/calendars/netherlands.xml", locale: "nl-NL" },
   { id: "united-states", label: "United States", path: "./src/data/calendars/united-states.xml", locale: "en-US" },
   { id: "empty", label: "Empty", path: "./src/data/calendars/empty.xml", locale: "en-US" }
 ];

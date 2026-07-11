@@ -16,7 +16,7 @@ This repository now contains a no-build browser prototype that implements the fi
 - supports explicit locale and IANA time zone settings for fallback names and lunar calculations, with numeric GMT fallback
 - keeps XPath weekday matching stable while using the selected starting weekday only for page layout
 - runs the original XPath event selectors
-- includes built-in calendar sources for Sweden, Norway, Denmark, Finland, United States, and an Empty fixture
+- includes built-in calendar sources for Sweden, Norway, Denmark, Finland, Netherlands, United States, and an Empty fixture
 - preserves event metadata such as category, source, priority, class, and language in the renderable model
 - preserves soft hyphen hints in rendered calendar names for print hyphenation
 - lets advanced users edit the source XML and event XPath rules directly

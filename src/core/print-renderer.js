@@ -375,7 +375,8 @@ function sourceFlagCode(sourceId) {
     norway: "no",
     "united-states": "us",
     denmark: "dk",
-    finland: "fi"
+    finland: "fi",
+    netherlands: "nl"
   };
 
   return map[sourceId] || sourceId;
