@@ -1,6 +1,10 @@
 # physicalendar
 Web app to make physical photo calendars.
 
+## Try It Online
+
+- Live app: https://roenbaeck.github.io/physicalendar/
+
 ## Current Prototype
 
 This repository now contains a no-build browser prototype that implements the first slice of `PLAN.md`:
@@ -12,6 +16,7 @@ This repository now contains a no-build browser prototype that implements the fi
 - supports explicit locale and IANA time zone settings for fallback names and lunar calculations, with numeric GMT fallback
 - keeps XPath weekday matching stable while using the selected starting weekday only for page layout
 - runs the original XPath event selectors
+- includes built-in calendar sources for Sweden, Norway, Denmark, Finland, United States, and an Empty fixture
 - preserves event metadata such as category, source, priority, class, and language in the renderable model
 - preserves soft hyphen hints in rendered calendar names for print hyphenation
 - lets advanced users edit the source XML and event XPath rules directly
@@ -22,7 +27,7 @@ This repository now contains a no-build browser prototype that implements the fi
 - validates XPath selectors that match non-day XML nodes and reports those targets in preflight and rule results
 - shows the calculation plugins that contributed generated facts, including per-plugin fact counts and generated anchors
 - lets users add fixed-date or calculated generated facts and anchors before XPath event rules run
-- offers print layout controls for paper size, margins, image ratio, optional month titles, month title size, weekday label size, and footer text
+- offers print layout controls for paper size, margins, image ratio, optional month titles, month title size, and weekday label size
 - warns about missing images, image ratio mismatches, low-resolution images, crowded days, text overflow, and selector issues
 - supports selector match expectations with `expectedMatches`, `minMatches`, and `maxMatches` in XML and custom rules
 - includes layout template packs for classic, gallery, and compact calendar pages
@@ -71,7 +76,7 @@ Browser regression checks:
 http://localhost:5173/tests.html
 ```
 
-The regression page covers Sweden, Norway, United States, and Empty XML fixtures, including representative generated-year checks for 1900, 2000, 2009, 2024, 2027, and 2099.
+The regression page currently covers Sweden, Norway, United States, and Empty XML fixtures, including representative generated-year checks for 1900, 2000, 2009, 2024, 2027, and 2099.
 
 The print button uses the browser's print dialog, so "Save as PDF" is available from the system print sheet. The generated print CSS follows the current layout settings. The toolbar's print-route button saves the current project locally and opens `print.html`, which renders the same project without the editor UI. The route can also render a static source directly, for example `print.html?source=./src/data/calendars/sweden.xml&year=2027&locale=sv-SE&timeZone=Europe/Stockholm&label=Sweden`, or a saved project JSON through `print.html?project=physicalendar-2027-project.json`. The standalone print HTML export produces a document that can be reopened and printed separately.
 
@@ -131,4 +136,4 @@ images/01.png
 
 ## Acknowledgements
 
-Flags courtsey of https://flagpedia.net.
+Flags courtesy of https://flagpedia.net.
