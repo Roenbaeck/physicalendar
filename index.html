@@ -38,6 +38,20 @@
         </label>
         <button id="simpleImageButton" class="simple-action secondary" type="button">Add month photo</button>
         <input id="quickImageInput" type="file" accept="image/*" hidden>
+        <div class="simple-toggle-group" aria-label="Day content options">
+          <label class="simple-toggle-row" for="simpleShowTextInput">
+            <input id="simpleShowTextInput" type="checkbox" checked>
+            <span>Text</span>
+          </label>
+          <label class="simple-toggle-row" for="simpleShowFlagsInput">
+            <input id="simpleShowFlagsInput" type="checkbox" checked>
+            <span>Flags</span>
+          </label>
+          <label class="simple-toggle-row" for="simpleShowMoonPhasesInput">
+            <input id="simpleShowMoonPhasesInput" type="checkbox" checked>
+            <span>Moon phases</span>
+          </label>
+        </div>
         <div class="simple-actions">
           <button id="simpleAdvancedButton" class="simple-action" type="button">Advanced</button>
           <button id="simplePrintButton" class="simple-action primary" type="button">Print</button>

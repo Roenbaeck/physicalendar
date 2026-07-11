@@ -193,6 +193,9 @@ function updatePrintStyle(layout) {
       break-inside: avoid !important;
       page-break-inside: avoid !important;
     }
+    .print-route .month-divider {
+      background: transparent !important;
+    }
     html, body {
       margin: 0 !important;
       padding: 0 !important;
@@ -222,6 +225,9 @@ function updatePrintStyle(layout) {
         page-break-after: auto !important;
         break-before: auto !important;
         page-break-before: auto !important;
+      }
+      .print-route .month-divider {
+        background: transparent !important;
       }
     }
   `;

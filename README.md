@@ -128,3 +128,7 @@ generated/pdf-commands.txt
 generated/calendar.pdf
 images/01.png
 ```
+
+## Acknowledgements
+
+Flags courtsey of https://flagpedia.net.

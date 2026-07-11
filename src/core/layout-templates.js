@@ -9,6 +9,9 @@ export const DEFAULT_LAYOUT = {
   marginLeft: 5,
   imageRatio: "4/3",
   showMonthTitle: true,
+  showText: true,
+  showFlags: true,
+  showMoonPhases: true,
   infoText: "Physicalendar preview",
   style: {
     accent: "#176b5b",
@@ -16,7 +19,8 @@ export const DEFAULT_LAYOUT = {
     titleFont: "Georgia, Times New Roman, serif",
     titleSize: 28,
     weekdaySize: 12,
-    dayMinHeight: 72
+    dayMinHeight: 72,
+    imageShare: 50
   }
 };
 
@@ -39,7 +43,8 @@ export const LAYOUT_TEMPLATES = [
         titleFont: "Georgia, Times New Roman, serif",
         titleSize: 28,
         weekdaySize: 12,
-        dayMinHeight: 72
+        dayMinHeight: 72,
+        imageShare: 50
       }
     }
   },
@@ -61,7 +66,8 @@ export const LAYOUT_TEMPLATES = [
         titleFont: "Inter, ui-sans-serif, system-ui, sans-serif",
         titleSize: 24,
         weekdaySize: 11,
-        dayMinHeight: 62
+        dayMinHeight: 62,
+        imageShare: 54
       }
     }
   },
@@ -83,7 +89,8 @@ export const LAYOUT_TEMPLATES = [
         titleFont: "Inter, ui-sans-serif, system-ui, sans-serif",
         titleSize: 23,
         weekdaySize: 10,
-        dayMinHeight: 82
+        dayMinHeight: 82,
+        imageShare: 44
       }
     }
   }

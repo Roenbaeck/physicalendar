@@ -62,6 +62,9 @@ const elements = {
   simpleYearInput: document.querySelector("#simpleYearInput"),
   simplePaperPresetInput: document.querySelector("#simplePaperPresetInput"),
   previewMonthInput: document.querySelector("#previewMonthInput"),
+  simpleShowTextInput: document.querySelector("#simpleShowTextInput"),
+  simpleShowFlagsInput: document.querySelector("#simpleShowFlagsInput"),
+  simpleShowMoonPhasesInput: document.querySelector("#simpleShowMoonPhasesInput"),
   simpleImageButton: document.querySelector("#simpleImageButton"),
   quickImageInput: document.querySelector("#quickImageInput"),
   simpleAdvancedButton: document.querySelector("#simpleAdvancedButton"),
@@ -214,6 +217,13 @@ function bindEvents() {
     renderProject();
   });
   elements.simplePaperPresetInput.addEventListener("change", applyPaperPreset);
+  for (const input of [elements.simpleShowTextInput, elements.simpleShowFlagsInput, elements.simpleShowMoonPhasesInput]) {
+    input.addEventListener("change", () => {
+      state.layout = readLayoutSettings();
+      storeLayout(state.layout);
+      renderProject();
+    });
+  }
   elements.previewMonthInput.addEventListener("change", () => {
     state.previewMonth = Number(elements.previewMonthInput.value || 1);
     renderPreview(state.project, readSettings());
@@ -519,6 +529,9 @@ function readLayoutSettings() {
     marginLeft: Number(elements.marginLeftInput.value || 10),
     imageRatio: elements.imageRatioInput.value,
     showMonthTitle: elements.showMonthTitleInput.checked,
+    showText: elements.simpleShowTextInput.checked,
+    showFlags: elements.simpleShowFlagsInput.checked,
+    showMoonPhases: elements.simpleShowMoonPhasesInput.checked,
     infoText: elements.infoTextInput.value || "Physicalendar preview",
     style: {
       ...(state.layout.style || {}),
@@ -543,6 +556,9 @@ function writeLayoutControls(layout) {
   elements.titleSizeInput.value = resolved.style.titleSize;
   elements.weekdaySizeInput.value = resolved.style.weekdaySize;
   elements.showMonthTitleInput.checked = resolved.showMonthTitle !== false;
+  elements.simpleShowTextInput.checked = resolved.showText !== false;
+  elements.simpleShowFlagsInput.checked = resolved.showFlags !== false;
+  elements.simpleShowMoonPhasesInput.checked = resolved.showMoonPhases !== false;
   elements.infoTextInput.value = resolved.infoText;
   elements.simplePaperPresetInput.value = paperPresetFor(resolved);
 }
@@ -622,7 +638,122 @@ function renderPreview(project, settings) {
 
   layoutPreviewImages();
   bindPreviewImagePan();
+  bindMonthDivider();
   fitDayNameTypography();
+}
+
+function bindMonthDivider() {
+  for (const divider of elements.preview.querySelectorAll("[data-image-divider-month]")) {
+    const month = divider.dataset.imageDividerMonth;
+    const page = divider.closest(".month-page");
+    const image = page?.querySelector(".month-image");
+    const grid = page?.querySelector(".calendar-grid");
+
+    if (!month || !page || !image || !grid) {
+      continue;
+    }
+
+    let dragging = false;
+    let fitPending = false;
+
+    const scheduleFit = () => {
+      if (fitPending) {
+        return;
+      }
+
+      fitPending = true;
+      requestAnimationFrame(() => {
+        fitPending = false;
+        fitDayNameTypography({ defer: false });
+      });
+    };
+
+    const onMove = (clientY) => {
+      if (!dragging) {
+        return;
+      }
+
+      const top = image.getBoundingClientRect().top;
+      const bottom = grid.getBoundingClientRect().bottom;
+      const total = Math.max(bottom - top, 1);
+      const nextShare = clampImageShare(((clientY - top) / total) * 100);
+      const imageRow = (nextShare / 50).toFixed(3);
+      const gridRow = ((100 - nextShare) / 50).toFixed(3);
+
+      page.style.setProperty("--calendar-image-row", `${imageRow}fr`);
+      page.style.setProperty("--calendar-grid-row", `${gridRow}fr`);
+
+      state.layout = {
+        ...state.layout,
+        style: {
+          ...(state.layout.style || {}),
+          imageShare: nextShare
+        }
+      };
+
+      scheduleFit();
+    };
+
+    const endDrag = () => {
+      if (!dragging) {
+        return;
+      }
+
+      dragging = false;
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+      storeLayout(state.layout);
+      fitDayNameTypography();
+    };
+
+    const onMouseMove = (event) => onMove(event.clientY);
+    const onMouseUp = () => endDrag();
+    const onTouchMove = (event) => {
+      const touch = event.touches?.[0];
+
+      if (!touch) {
+        return;
+      }
+
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+
+      onMove(touch.clientY);
+    };
+    const onTouchEnd = () => endDrag();
+
+    divider.addEventListener("mousedown", (event) => {
+      if (event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+      dragging = true;
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseup", onMouseUp);
+    });
+
+    divider.addEventListener("touchstart", (event) => {
+      const touch = event.touches?.[0];
+
+      if (!touch) {
+        return;
+      }
+
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+
+      dragging = true;
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
+      window.addEventListener("touchend", onTouchEnd);
+      window.addEventListener("touchcancel", onTouchEnd);
+    }, { passive: false });
+  }
 }
 
 function layoutPreviewImages() {
@@ -687,8 +818,9 @@ function applyPreviewImageLayout(container, image, month) {
   image.style.transformOrigin = "50% 50%";
 }
 
-function fitDayNameTypography() {
-  requestAnimationFrame(() => {
+function fitDayNameTypography(options = {}) {
+  const { defer = true } = options;
+  const run = () => {
     for (const page of elements.preview.querySelectorAll(".month-page")) {
       const labels = Array.from(page.querySelectorAll(".day-names")).filter((label) => {
         return label.textContent && label.textContent.trim().length > 0;
@@ -720,7 +852,13 @@ function fitDayNameTypography() {
 
       page.style.setProperty("--adaptive-day-name-size", `${best.toFixed(2)}px`);
     }
-  });
+  };
+
+  if (defer) {
+    requestAnimationFrame(run);
+  } else {
+    run();
+  }
 }
 
 function bindPreviewImagePan() {
@@ -1746,6 +1884,10 @@ function imageSettingsFor(month) {
 
 function clampPercent(value) {
   return Math.max(0, Math.min(100, Number(value) || 0));
+}
+
+function clampImageShare(value) {
+  return Math.max(25, Math.min(75, Number(value) || 50));
 }
 
 function findDay(project, date) {

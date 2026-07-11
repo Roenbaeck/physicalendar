@@ -1681,6 +1681,9 @@
     <day xpath="/calendar/year/month[12]/day[26]" holiday="true">
       <name>Andre jule&#xAD;dag</name>
     </day>
+		<day xpath="/calendar/year/month[12]/day[31]">
+			<name>Nyttårs&#xAD;aften</name>
+		</day>
     <!-- Dagen for Stortingsvalg -->
   </event>
 </calendar>

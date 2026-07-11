@@ -193,6 +193,34 @@ select {
   color: #fff;
 }
 
+.simple-toggle-group {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.simple-toggle-row {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.simple-rail .simple-toggle-row input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #ffffff;
+}
+
 .simple-actions {
   display: grid;
   gap: 8px;
@@ -1186,7 +1214,7 @@ input[type="file"] {
 
 .month-page {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, var(--calendar-image-row, 1fr)) var(--calendar-divider-size, 8px) minmax(0, var(--calendar-grid-row, 1fr));
   width: var(--preview-page-width);
   max-width: 100%;
   margin: 0 auto;
@@ -1236,6 +1264,22 @@ input[type="file"] {
   border-radius: 8px;
   height: 100%;
   min-height: 0;
+}
+
+.month-divider {
+  display: block;
+  height: var(--calendar-divider-size, 8px);
+  margin: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(156, 166, 170, 0.3) 0%, rgba(156, 166, 170, 0.65) 50%, rgba(156, 166, 170, 0.3) 100%);
+}
+
+.month-divider[data-image-divider-month] {
+  cursor: row-resize;
+}
+
+.month-divider[data-image-divider-month]:hover {
+  background: linear-gradient(90deg, rgba(76, 141, 160, 0.35) 0%, rgba(76, 141, 160, 0.85) 50%, rgba(76, 141, 160, 0.35) 100%);
 }
 
 .month-image img {

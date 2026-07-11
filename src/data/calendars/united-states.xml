@@ -428,16 +428,22 @@
     </day>
   </week>
   <event>
-    <day xpath="/calendar/year/month[1]/day[1]" holiday="true">
+    <day xpath="/calendar/year/month[1]/day[1]" holiday="true" flag="true">
       <name>New Year's Day</name>
     </day>
-    <day xpath="/calendar/year/month[1]/day[@weekday = 1][3]" holiday="true">
+    <day xpath="/calendar/year/month[1]/day[@weekday = 1][3]" holiday="true" flag="true">
       <name>Martin Luther King Day</name>
+    </day>
+    <day xpath="/calendar/year/month[1]/day[20][number(@year) &gt;= 1937 and @year mod 4 = 1]" flag="true">
+      <name>Inauguration Day</name>
+    </day>
+    <day xpath="/calendar/year/month[2]/day[12]" flag="true">
+      <name>Lincoln's Birthday</name>
     </day>
     <day xpath="/calendar/year/month[2]/day[14]">
       <name>Valentine's Day</name>
     </day>
-    <day xpath="/calendar/year/month[2]/day[@weekday = 1][3]" holiday="true">
+    <day xpath="/calendar/year/month[2]/day[@weekday = 1][3]" holiday="true" flag="true">
       <name>Washington's Birthday</name>
     </day>
     <day xpath="/calendar/year/month[3]/day[17]">
@@ -449,7 +455,7 @@
     <day xpath="/calendar/year/month/day[@easter = 'true']/preceding-sibling::day[@weekday = 5][1]">
       <name>Good Friday</name>
     </day>
-    <day xpath="/calendar/year/month/day[@easter = 'true']">
+    <day xpath="/calendar/year/month/day[@easter = 'true']" flag="true">
       <name>Easter Sunday</name>
     </day>
     <day xpath="/calendar/year/month/day[@easter = 'true']/following-sibling::day[@weekday = 1][1]">
@@ -470,23 +476,47 @@
     <day xpath="/calendar/year/month[5]/day[5]">
       <name>Cinco de Mayo</name>
     </day>
-    <day xpath="/calendar/year/month[5]/day[@weekday = 7][2]">
+    <day xpath="/calendar/year/month[5]/day[@weekday = 7][2]" flag="true">
       <name>Mother's Day</name>
     </day>
-    <day xpath="/calendar/year/month[5]/day[@weekday = 1][position() = last()]" holiday="true">
+    <day xpath="/calendar/year/month[5]/day[@weekday = 6][3]" flag="true">
+      <name>Armed Forces Day</name>
+    </day>
+    <day xpath="/calendar/year/month[5]/day[@weekday = 1][position() = last()]" holiday="true" flag="true">
       <name>Memorial Day</name>
+    </day>
+    <day xpath="/calendar/year/month[6]/day[19]" holiday="true" flag="true">
+      <name>Juneteenth National Independence Day</name>
+    </day>
+    <day xpath="/calendar/year/month[6]/day[19][@weekday = 6]/preceding-sibling::day[1]" holiday="true" flag="true">
+      <name>Juneteenth (Observed)</name>
+    </day>
+    <day xpath="/calendar/year/month[6]/day[19][@weekday = 7]/following-sibling::day[1]" holiday="true" flag="true">
+      <name>Juneteenth (Observed)</name>
     </day>
     <day xpath="/calendar/year/month[6]/day[@weekday = 7][3]">
       <name>Father's Day</name>
     </day>
-    <day xpath="/calendar/year/month[6]/day[4]" holiday="true">
+    <day xpath="/calendar/year/month[7]/day[4]" holiday="true" flag="true">
       <name>Independence Day</name>
     </day>
-    <day xpath="/calendar/year/month[9]/day[@weekday = 1][1]" holiday="true">
+    <day xpath="/calendar/year/month[7]/day[4][@weekday = 6]/preceding-sibling::day[1]" holiday="true" flag="true">
+      <name>Independence Day (Observed)</name>
+    </day>
+    <day xpath="/calendar/year/month[7]/day[4][@weekday = 7]/following-sibling::day[1]" holiday="true" flag="true">
+      <name>Independence Day (Observed)</name>
+    </day>
+    <day xpath="/calendar/year/month[9]/day[@weekday = 1][1]" holiday="true" flag="true">
       <name>Labor Day</name>
     </day>
-    <day xpath="/calendar/year/month[10]/day[@weekday = 1][2]" holiday="true">
+    <day xpath="/calendar/year/month[9]/day[17]" flag="true">
+      <name>Constitution Day</name>
+    </day>
+    <day xpath="/calendar/year/month[10]/day[@weekday = 1][2]" holiday="true" flag="true">
       <name>Columbus Day</name>
+    </day>
+    <day xpath="/calendar/year/month[10]/day[27]" flag="true">
+      <name>Navy Day</name>
     </day>
     <day xpath="/calendar/year/month[10]/day[9]">
       <name>Leif Erikson Day</name>
@@ -497,20 +527,38 @@
     <day xpath="/calendar/year/month[11]/day[1]">
       <name>All Saints Day</name>
     </day>
-    <day xpath="/calendar/year/month[11]/day[11]" holiday="true">
+    <day xpath="/calendar/year/month[11]/day[11]" holiday="true" flag="true">
       <name>Veterans Day</name>
     </day>
-    <day xpath="/calendar/year/month[11]/day[@weekday = 4][4]" holiday="true">
+    <day xpath="/calendar/year/month[11]/day[11][@weekday = 6]/preceding-sibling::day[1]" holiday="true" flag="true">
+      <name>Veterans Day (Observed)</name>
+    </day>
+    <day xpath="/calendar/year/month[11]/day[11][@weekday = 7]/following-sibling::day[1]" holiday="true" flag="true">
+      <name>Veterans Day (Observed)</name>
+    </day>
+    <day xpath="/calendar/year/month[11]/day[@weekday = 2][@index &gt; 1 and @index &lt;= 8][1]">
+      <name>Election Day</name>
+    </day>
+    <day xpath="/calendar/year/month[11]/day[@weekday = 4][4]" holiday="true" flag="true">
       <name>Thanksgiving Day</name>
     </day>
-    <day xpath="/calendar/year/month[12]/day[25]" holiday="true">
+    <day xpath="/calendar/year/month[12]/day[25]" holiday="true" flag="true">
       <name>Christmas Day</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[25][@weekday = 6]/preceding-sibling::day[1]" holiday="true" flag="true">
+      <name>Christmas Day (Observed)</name>
+    </day>
+    <day xpath="/calendar/year/month[12]/day[25][@weekday = 7]/following-sibling::day[1]" holiday="true" flag="true">
+      <name>Christmas Day (Observed)</name>
     </day>
     <day xpath="/calendar/year/month[12]/day[26]">
       <name>Kwanzaa</name>
     </day>
     <day xpath="/calendar/year/month[12]/day[31]">
       <name>New Year's Eve</name>
+    </day>
+    <day xpath="/calendar/year/month[1]/day[1][@weekday = 7]/following-sibling::day[1]" holiday="true" flag="true">
+      <name>New Year's Day (Observed)</name>
     </day>
     <day xpath="/calendar/year/month[6]/day[14]" flag="true">
       <name>National Flag Day</name>
