@@ -127,22 +127,7 @@ select {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.brand-mark {
-  display: grid;
-  flex: 0 0 32px;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  color: #fff;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 20px;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.08);
+  gap: 0;
 }
 
 .simple-brand strong {
@@ -1515,11 +1500,18 @@ input[type="file"] {
 
   .month-page {
     width: 210mm;
-    height: 297mm;
+    max-height: 297mm;
     max-width: none;
     padding: 15mm 10mm 8mm;
     border: 0;
     box-shadow: none;
-    page-break-after: always;
+    overflow: hidden;
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  .month-page:not(:first-child) {
+    break-before: page;
+    page-break-before: always;
   }
 }

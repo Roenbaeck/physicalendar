@@ -224,7 +224,7 @@ function bindEvents() {
   elements.advancedCloseButton.addEventListener("click", () => setAppView("simple"));
   elements.prevPageButton.addEventListener("click", () => flipPage(-1));
   elements.nextPageButton.addEventListener("click", () => flipPage(1));
-  elements.simplePrintButton.addEventListener("click", openPrintRoute);
+  elements.simplePrintButton.addEventListener("click", () => openPrintRoute({ print: true }));
   elements.sourceImport.addEventListener("change", importSourceXml);
   elements.icsImport.addEventListener("change", importIcs);
   elements.saveLocalProjectButton.addEventListener("click", saveLocalProject);
@@ -282,12 +282,12 @@ function bindEvents() {
     });
   }
 
-  elements.printButton.addEventListener("click", openPrintRoute);
+  elements.printButton.addEventListener("click", () => openPrintRoute({ print: true }));
   elements.exportSourceXmlButton.addEventListener("click", exportSourceXml);
   elements.exportFactsButton.addEventListener("click", exportGeneratedFacts);
   elements.exportIcsButton.addEventListener("click", exportIcs);
   elements.exportPrintHtmlButton.addEventListener("click", exportPrintHtml);
-  elements.openPrintRouteButton.addEventListener("click", openPrintRoute);
+  elements.openPrintRouteButton.addEventListener("click", () => openPrintRoute({ print: false }));
   updateRuleFormVisibility();
   updateFactFormVisibility();
 }
@@ -1909,17 +1909,38 @@ function exportPrintHtml() {
   downloadText(`physicalendar-${readSettings().year}-print.html`, html, "text/html");
 }
 
-function openPrintRoute() {
+function openPrintRoute(options = {}) {
   if (!state.sourceDoc) {
     return;
   }
 
   try {
     const project = createProjectSnapshot({ includeImages: true });
+    const routeUrl = new URL("./print.html", window.location.href);
+    const projectKey = `print-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-    writeLocalProject(project);
-    updateLocalProjectStatus(`Saved print route project ${formatSavedAt(project.savedAt)}.`, "ok");
-    window.open("./print.html", "_blank", "noopener");
+    window.__physicalendarPrintProjects = window.__physicalendarPrintProjects || {};
+    window.__physicalendarPrintProjects[projectKey] = project;
+
+    routeUrl.searchParams.set("projectKey", projectKey);
+
+    if (options.print) {
+      routeUrl.searchParams.set("print", "1");
+    }
+
+    const opened = window.open(routeUrl.toString(), "_blank");
+
+    if (!opened) {
+      delete window.__physicalendarPrintProjects[projectKey];
+      throw new Error("The browser blocked the print window.");
+    }
+
+    updateLocalProjectStatus(`Opened print route from in-memory project ${formatSavedAt(project.savedAt)}.`, "ok");
+    window.setTimeout(() => {
+      if (window.__physicalendarPrintProjects) {
+        delete window.__physicalendarPrintProjects[projectKey];
+      }
+    }, 60_000);
   } catch (error) {
     updateLocalProjectStatus(`Could not open print route: ${error.message || String(error)}`, "error");
   }
@@ -2080,6 +2101,7 @@ function createProjectSnapshot(options = {}) {
   const project = {
     version: 5,
     savedAt: new Date().toISOString(),
+    sourceId: sourceIdFromPath(elements.sourceSelect.value),
     sourceLabel: state.sourceLabel,
     sourceXml: serializeXml(state.sourceDoc),
     settings,

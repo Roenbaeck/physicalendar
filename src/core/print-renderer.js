@@ -59,9 +59,11 @@ export function dynamicPrintCss(layout) {
     @media print {
       .month-page {
         width: ${numberCss(layout.paperWidth)}${unit};
-        height: ${numberCss(layout.paperHeight)}${unit};
-        min-height: ${numberCss(layout.paperHeight)}${unit};
+        max-height: ${numberCss(layout.paperHeight)}${unit};
+        height: auto;
+        min-height: 0;
         padding: ${numberCss(layout.marginTop)}${unit} ${numberCss(layout.marginRight)}${unit} ${numberCss(layout.marginBottom)}${unit} ${numberCss(layout.marginLeft)}${unit};
+        overflow: hidden;
       }
     }
   `;
@@ -83,12 +85,11 @@ function renderStandalonePrintCss(layout) {
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
       width: ${numberCss(layout.paperWidth)}${sanitizeUnit(layout.unit)};
-      min-height: ${numberCss(layout.paperHeight)}${sanitizeUnit(layout.unit)};
+      max-height: ${numberCss(layout.paperHeight)}${sanitizeUnit(layout.unit)};
       margin: 0 auto;
       padding: ${numberCss(layout.marginTop)}${sanitizeUnit(layout.unit)} ${numberCss(layout.marginRight)}${sanitizeUnit(layout.unit)} ${numberCss(layout.marginBottom)}${sanitizeUnit(layout.unit)} ${numberCss(layout.marginLeft)}${sanitizeUnit(layout.unit)};
       background: #fff;
-      page-break-after: always;
-      break-after: page;
+      overflow: hidden;
       ${layoutVariables(layout)}
     }
     .month-title {

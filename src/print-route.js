@@ -38,14 +38,28 @@ async function renderRoute() {
     writePaperDataset(layout);
     updatePrintStyle(layout);
     root.innerHTML = renderPrintPages(project, settings, {
+      sourceId: projectSnapshot.sourceId || sourceIdFromLabel(projectSnapshot.sourceLabel),
       sourceLabel: projectSnapshot.sourceLabel || "Calendar",
       monthImages: projectSnapshot.monthImages || {},
       monthImageSettings: projectSnapshot.monthImageSettings || {},
       layout
     });
 
+    document.body.classList.add("print-ready");
+    await nextFrame();
+    await nextFrame();
+    layoutRouteImages(projectSnapshot.monthImageSettings || {});
+
     if (params.get("print") === "1") {
-      requestAnimationFrame(() => window.print());
+      window.addEventListener("beforeprint", () => {
+        document.body.classList.add("print-ready");
+        layoutRouteImages(projectSnapshot.monthImageSettings || {});
+      }, { once: true });
+      requestAnimationFrame(() => {
+        document.body.classList.add("print-ready");
+        layoutRouteImages(projectSnapshot.monthImageSettings || {});
+        window.print();
+      });
     }
   } catch (error) {
     root.innerHTML = `
@@ -59,6 +73,19 @@ async function renderRoute() {
 }
 
 async function loadProjectSnapshot(params) {
+  if (params.has("projectKey")) {
+    const key = params.get("projectKey");
+    const openerProjects = window.opener?.__physicalendarPrintProjects;
+
+    if (key && openerProjects && openerProjects[key]) {
+      const project = openerProjects[key];
+      delete openerProjects[key];
+      return project;
+    }
+
+    throw new Error("The print project could not be transferred from the editor window.");
+  }
+
   if (params.has("project")) {
     const response = await fetch(params.get("project"));
 
@@ -133,8 +160,144 @@ function writePaperDataset(layout) {
 
 function updatePrintStyle(layout) {
   const style = document.createElement("style");
-  style.textContent = dynamicPrintCss(layout);
+  const unit = sanitizeUnitLocal(layout.unit);
+  const width = `${numberCssLocal(layout.paperWidth)}${unit}`;
+  const height = `${numberCssLocal(layout.paperHeight)}${unit}`;
+  const padding = `${numberCssLocal(layout.marginTop)}${unit} ${numberCssLocal(layout.marginRight)}${unit} ${numberCssLocal(layout.marginBottom)}${unit} ${numberCssLocal(layout.marginLeft)}${unit}`;
+
+  style.textContent = `${dynamicPrintCss(layout)}
+    .print-route {
+      background: #fff !important;
+    }
+    .print-route .print-document {
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #fff !important;
+    }
+    .print-route .month-page {
+      width: ${width} !important;
+      max-height: calc(${height} - 0.5mm) !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: ${padding} !important;
+      margin: 0 !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+      aspect-ratio: ${numberCssLocal(layout.paperWidth)} / ${numberCssLocal(layout.paperHeight)} !important;
+      break-after: auto !important;
+      page-break-after: auto !important;
+      break-before: auto !important;
+      page-break-before: auto !important;
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100%;
+      height: 100%;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    @media print {
+      .print-route,
+      .print-route .print-document,
+      html, body, .print-document {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+      }
+      .print-route .month-page {
+        width: ${width} !important;
+        max-height: calc(${height} - 0.5mm) !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        break-after: auto !important;
+        page-break-after: auto !important;
+        break-before: auto !important;
+        page-break-before: auto !important;
+      }
+    }
+  `;
   document.head.appendChild(style);
+}
+
+function layoutRouteImages(monthImageSettings) {
+  for (const container of root.querySelectorAll(".month-image[data-image-month]")) {
+    const month = container.dataset.imageMonth;
+    const image = container.querySelector("img");
+    const settings = monthImageSettings?.[month];
+    const meta = settings?.meta || {};
+    const sourceWidth = Number(meta.width);
+    const sourceHeight = Number(meta.height);
+
+    if (!image || !sourceWidth || !sourceHeight) {
+      continue;
+    }
+
+    const containerWidth = Math.max(container.clientWidth, 1);
+    const containerHeight = Math.max(container.clientHeight, 1);
+    const fit = ["cover", "contain", "fill"].includes(settings.fit) ? settings.fit : "cover";
+    const scale = Math.max(Number(settings.scale) || 100, 1) / 100;
+    let renderWidth = containerWidth;
+    let renderHeight = containerHeight;
+
+    if (fit === "fill") {
+      renderWidth = containerWidth * scale;
+      renderHeight = containerHeight * scale;
+    } else {
+      const baseScale = fit === "contain"
+        ? Math.min(containerWidth / sourceWidth, containerHeight / sourceHeight)
+        : Math.max(containerWidth / sourceWidth, containerHeight / sourceHeight);
+
+      renderWidth = sourceWidth * baseScale * scale;
+      renderHeight = sourceHeight * baseScale * scale;
+    }
+
+    const overflowX = Math.max(0, renderWidth - containerWidth);
+    const overflowY = Math.max(0, renderHeight - containerHeight);
+    const positionX = clampPercent(settings.positionX);
+    const positionY = clampPercent(settings.positionY);
+    const left = -overflowX * (positionX / 100);
+    const top = -overflowY * (positionY / 100);
+
+    image.style.position = "absolute";
+    image.style.left = `${left}px`;
+    image.style.top = `${top}px`;
+    image.style.width = `${renderWidth}px`;
+    image.style.height = `${renderHeight}px`;
+    image.style.maxWidth = "none";
+    image.style.maxHeight = "none";
+    image.style.objectFit = "fill";
+    image.style.objectPosition = "50% 50%";
+    image.style.transform = "none";
+    image.style.transformOrigin = "50% 50%";
+  }
+}
+
+function numberCssLocal(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? String(Math.max(number, 0)) : "0";
+}
+
+function sanitizeUnitLocal(unit) {
+  return ["mm", "in", "pt", "cm"].includes(unit) ? unit : "mm";
+}
+
+function clampPercent(value) {
+  return Math.max(0, Math.min(100, Number(value) || 0));
+}
+
+function nextFrame() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => resolve());
+  });
 }
 
 function escapeHtml(value) {
